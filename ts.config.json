@@ -1,0 +1,13 @@
+{
+  "compilerOptions":
+    {
+      "strict": true,
+      "target": "es2021",
+      "module": "commonjs",
+      "outDir": "dist",
+      "sourceMap": true,
+      "noEmitOnError": true
+    },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
