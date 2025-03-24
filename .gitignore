@@ -134,3 +134,21 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# misc
+setup_env.sh
+yarn-error.log
+DS_STORE
+node_modules
+*~
+.vscode
+*.swp
+*.swo
+.DS_Store
+package-lock.json
+yarn.lock
+logs/
+*.log*
+
+dist
+package-lock.json
