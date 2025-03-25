@@ -1,0 +1,25 @@
+{
+  "name": "job-search-tracker-backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "source ./local_env.sh && node dist/index.js",
+    "dev": "source ./local_env.sh && nodemon",
+    "lint": "./node_modules/.bin/eslint src",
+    "format": "./node_modules/.bin/prettier --write src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.13",
+    "eslint": "^9.23.0",
+    "nodemon": "^3.1.9",
+    "prettier": "3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
+  }
+}
