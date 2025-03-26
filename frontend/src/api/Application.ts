@@ -1,6 +1,2 @@
-export interface Application {
-  id: string;
-  company: string;
-  role: string;
-  status: string;
-};
+// import * as Application from '../../../common/Application';
+export * from "../../../common/Application";
