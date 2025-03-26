@@ -41,7 +41,7 @@ const applicationArray: Application[] = [
     },
 ];
 
-function App() {
+function Screen() {
     const [applications] = useState<Application[]>(applicationArray);
     const [selectedApplication, setSelecetedApplication] = useState<Application | null>(null);
 
@@ -74,4 +74,4 @@ function App() {
     );
 }
 
-export default App;
+export default Screen;
