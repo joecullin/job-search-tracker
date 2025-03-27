@@ -1,0 +1,13 @@
+
+
+.applications-new-application-button {
+    margin-left: auto;
+    position: absolute;
+    right: 75px;
+    top: 0;
+    /* width: 49%; */
+}
+
+.applications-application-card {
+    margin-top: 1rem;
+}

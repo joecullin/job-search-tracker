@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./css/main.css";
 import Applications from "./Applications.tsx";
 import Home from "./Home.tsx";
 import NotFound from "./NotFound.tsx";

@@ -43,6 +43,8 @@ export type Application = {
     companyName: string;
     role: string;
     status: ApplicationStatusId;
+    note: string;
+    source: string;
     statusLog: ApplicationStatusId[];
     /* TODO: other fields to track:
     - notes (freeform but short)

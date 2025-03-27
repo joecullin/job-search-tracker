@@ -6,7 +6,6 @@ import { useParams } from "react-router";
 
 function Screen() {
     const { "*": splat } = useParams();
-    console.log(splat);
 
     return (
         <div>

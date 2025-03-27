@@ -1,72 +1,67 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import type { Application } from "./api/Application";
+import { Application, getApplications } from "./api/Application";
 
 import ApplicationList from "./components/ApplicationList";
-import ApplicationDetail from "./components/ApplicationDetail";
 
-const applicationArray: Application[] = [
-    {
-        id: "1a",
-        companyName: "Acme Inc",
-        role: "Sr Eng Mgr",
-        status: "applied",
-        statusLog: [],
-    },
-    {
-        id: "2b",
-        companyName: "Moe's Tavern",
-        role: "Barback",
-        status: "applicationRejected",
-        statusLog: ["applied", "applicationRejected"],
-    },
-    {
-        id: "3c",
-        companyName: "Central Perk",
-        role: "Associate barista",
-        status: "applicationIgnored",
-        statusLog: ["applied", "applicationIgnored"],
-    },
-    {
-        id: "4d",
-        companyName: "Initech",
-        role: "Printer maintenance",
-        status: "applicationRejected",
-        statusLog: ["applied", "interview1", "interview2", "offered"],
-    },
-];
 
 function Screen() {
-    const [applications] = useState<Application[]>(applicationArray);
-    const [selectedApplication, setSelecetedApplication] = useState<Application | null>(null);
+    const [applications, setApplications] = useState<Application[]>([]);
+    const [focusedApplications, setFocusedApplications] = useState<string[]>([]);
+    const [editingApplications, setEditingApplications] = useState<string[]>([]);
+
+    const focusApplication = (applicationId: string, focused: boolean) => {
+        const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
+        if (focused){
+            focusedIds.push(applicationId);
+        }
+        setFocusedApplications(focusedIds);
+    };
+
+    const editingApplication = (applicationId: string, editing: boolean) => {
+        const editingIds = editingApplications.filter((id: string) => id !== applicationId);
+        if (editing){
+            editingIds.push(applicationId);
+        }
+        setEditingApplications(editingIds);
+        focusApplication(applicationId, editing);
+    };
+
+    useEffect(() => {
+        const allApplications = getApplications();
+        setApplications(allApplications);
+    }, []);
 
     return (
         <div>
-            <h1 className="text-center mt-4">Application tracker</h1>
+            <div>
+                <h1 className="text-center mt-4">Applications</h1>
+            </div>
             <Container className="mt-4">
+                <Row>
+                    <Col>
+                        <Button
+                            variant="primary"
+                            className="float-end"
+                        >
+                            New application
+                        </Button>
+                    </Col>
+                </Row>
                 <Row>
                     <Col>
                         <ApplicationList
                             applications={applications}
-                            onApplicationClick={(c) => setSelecetedApplication(c)}
+                            focusedApplications={focusedApplications}
+                            editingApplications={editingApplications}
+                            focusApplication={(applicationId, focused) => focusApplication(applicationId, focused) }
+                            editingApplication={(applicationId, editing) => editingApplication(applicationId, editing) }
                         />
-                        <Button
-                            variant="primary"
-                            className="mt-4"
-                            onClick={() => {
-                                setSelecetedApplication(null);
-                            }}
-                        >
-                            Deselect application
-                        </Button>
-                    </Col>
-                    <Col>
-                        <ApplicationDetail application={selectedApplication} />
                     </Col>
                 </Row>
             </Container>
