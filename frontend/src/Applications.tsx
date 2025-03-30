@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import { Application, getApplications } from "./api/Application";
+import { Application, getApplications, newApplication } from "./api/Application";
 
 import ApplicationList from "./components/ApplicationList";
 
@@ -17,7 +17,8 @@ function Screen() {
 
     const focusApplication = (applicationId: string, focused: boolean) => {
         const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
-        if (focused){
+        const isEditing = editingApplications.includes(applicationId);
+        if (focused || isEditing){
             focusedIds.push(applicationId);
         }
         setFocusedApplications(focusedIds);
@@ -30,6 +31,22 @@ function Screen() {
         }
         setEditingApplications(editingIds);
         focusApplication(applicationId, editing);
+    };
+
+    const saveChanges = (applicationId: string, application: Application) => {
+        const applicationIndex = applications.findIndex((application: Application) => application.id === applicationId);
+        if (applicationIndex > -1){
+            applications[applicationIndex] = application
+            setApplications(applications);
+        }
+        editingApplication(applicationId, false);
+    };
+
+    const addApplication = () => {
+        const application = newApplication();
+        applications.push(application);
+        setApplications(applications);
+        editingApplication(application.id, true);
     };
 
     useEffect(() => {
@@ -48,6 +65,7 @@ function Screen() {
                         <Button
                             variant="primary"
                             className="float-end"
+                            onClick={() => addApplication()}
                         >
                             New application
                         </Button>
@@ -61,6 +79,7 @@ function Screen() {
                             editingApplications={editingApplications}
                             focusApplication={(applicationId, focused) => focusApplication(applicationId, focused) }
                             editingApplication={(applicationId, editing) => editingApplication(applicationId, editing) }
+                            saveChanges={(applicationId, changes) => saveChanges(applicationId, changes) }
                         />
                     </Col>
                 </Row>

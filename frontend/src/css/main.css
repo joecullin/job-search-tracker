@@ -1,4 +1,9 @@
 
+/* TODO:
+ - pick a simple naming convention.
+ - move all my temp inline-in-jsx styles here?
+ - or put them next to the components? Haven't explored that in vite yet.
+*/
 
 .applications-new-application-button {
     margin-left: auto;

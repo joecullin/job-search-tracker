@@ -1,4 +1,6 @@
 import {Application} from "../../../common/Application";
+import { v4 as uuidv4 } from 'uuid';
+
 export * from "../../../common/Application";
 
 export const getApplications = () => {
@@ -11,6 +13,9 @@ export const getApplications = () => {
             note: "example note ...",
             source: "Indeed",
             statusLog: [],
+            firstContactDate: "2025-03-15",
+            lastContactDate: "2025-03-28",
+            reminderDate: "",
         },
         {
             id: "2b",
@@ -20,6 +25,9 @@ export const getApplications = () => {
             note: "example note ...",
             source: "Recruiter contacted me",
             statusLog: ["applied", "applicationRejected"],
+            firstContactDate: "2025-03-15",
+            lastContactDate: "2025-03-28",
+            reminderDate: "",
         },
         {
             id: "3c",
@@ -29,6 +37,9 @@ export const getApplications = () => {
             source: "Indeed",
             status: "applicationIgnored",
             statusLog: ["applied", "applicationIgnored"],
+            firstContactDate: "2025-03-15",
+            lastContactDate: "2025-03-28",
+            reminderDate: "",
         },
         {
             id: "4d",
@@ -38,7 +49,28 @@ export const getApplications = () => {
             source: "jobs4U.com",
             status: "applicationRejected",
             statusLog: ["applied", "interview1", "interview2", "offered"],
+            firstContactDate: "2025-03-15",
+            lastContactDate: "2025-03-28",
+            reminderDate: "",
         },
     ];
     return applicationArray;
-}
+};
+
+export const newApplication = () => {
+    const currentDate = (new Date()).toISOString().substring(0,10);
+    const application = <Application>{
+        id: uuidv4(),
+        companyName: "",
+        role: "",
+        status: "applied",
+        note: "",
+        source: "",
+        statusLog: [],
+        firstContactDate: currentDate,
+        lastContactDate: currentDate,
+        reminderDate: "",
+    };
+    return application;
+};
+

@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Fragment } from "react/jsx-runtime";
@@ -10,46 +11,73 @@ interface ApplicationDetailProps {
     isEditing: boolean;
     focusApplication: (applicationId: string, focused: boolean) => void;
     editingApplication: (applicationId: string, editing: boolean) => void;
+    saveChanges: (applicationId: string, application: Application) => void;
 }
 
-export default function ApplicationCard({ application, isEditing, isFocused, focusApplication, editingApplication }: ApplicationDetailProps) {
-    if (!application){
+export default function ApplicationCard({
+    application,
+    saveChanges,
+    isEditing,
+    isFocused,
+    focusApplication,
+    editingApplication
+}: ApplicationDetailProps) {
+    const [draft, setDraft] = useState<Application|null>(application);
+    const cardRef = useRef<HTMLDivElement | null>(null);
+
+    if (!application || !draft){
         return <Card className="applications-application-card">-</Card>;
     }
+
+    const draftChanges = (changes: object) => {
+        if (draft){
+            setDraft({
+                ...draft,
+                ...changes,
+            });
+        }
+    };
+
+    const scrollCardIntoView = () => {
+        console.log("scrollIntoView");
+        console.log("ref", cardRef);
+        if (cardRef?.current){
+            console.log("hey");
+            cardRef.current.scrollIntoView();
+        }
+    };
+
     return (
         <Card
             border={isEditing ? "primary" : isFocused ? "dark" : ""}
             className="applications-application-card"
             onClick={() => focusApplication(application.id, !isFocused)}
+            ref={cardRef}
         >
-            <Card.Header>
-                    {applicationStatusLabel(application.status)}
-            </Card.Header>
             <Card.Body>
                 <Card.Title>
                     {application.companyName}
                 </Card.Title>
-                    {
-                    !isFocused
-                    ? (
-                        <Card.Text>
-                            {application.role}
-                        </Card.Text>
-                    )
-                    : !isEditing
-                        ? (
+                {!isEditing &&
+                    <div>
+                        <Fragment>
+                            <div>
+                                {application.role}
+                            </div>
+                            <div style={{fontStyle: "italic", fontSize: ".8rem"}}>
+                                {applicationStatusLabel(application.status)} {/* TODO: colors and/or icons for statuses */}
+                            </div>
+                        </Fragment>
+                        {isFocused && (
                             <Fragment>
-                                <div>
-                                    {application.role}
-                                </div>
-                                <div>
+                                <div style={{marginTop: ".5rem"}}>
                                     <b>Source:</b> {application.source}
                                 </div>
                                 <div>
                                     <b>Notes:</b>
                                     {application.note?.includes("\n") ?
                                     (<p
-                                    style={{ // TODO: move to stylesheet
+                                    style={{
                                         wordWrap: "break-word",
                                         whiteSpace: "pre-wrap",
                                         margin: "0 0 0 1rem",
@@ -58,19 +86,26 @@ export default function ApplicationCard({ application, isEditing, isFocused, foc
                                     >
                                         {application.note}
                                     </p>)
-                                    : <span style={{fontStyle: "italic"}}> {/* TODO: move to stylesheet  */}
+                                    : <span style={{fontStyle: "italic"}}>
                                         {application.note}
                                     </span>
                                     }
                                 </div>
                             </Fragment>
-                        )
-                        : (
-                        <ApplicationForm
-                            application={application}
-                        />
-                    )
+                        )}
+                    </div>
                 }
+                {isEditing && (
+                    <div style={{
+                        backgroundColor: "lightgray",
+                        padding: "1rem",
+                    }}>
+                        <ApplicationForm
+                            application={draft}
+                            saveChanges={draftChanges}
+                        />
+                    </div>
+                )}
             </Card.Body>
             <Card.Footer>
                 {!isEditing &&
@@ -78,6 +113,7 @@ export default function ApplicationCard({ application, isEditing, isFocused, foc
                         onClick={(event) => {
                             event.stopPropagation();
                             editingApplication(application.id, true);
+                            scrollCardIntoView();
                     }}>
                         edit
                     </Button>
@@ -87,7 +123,7 @@ export default function ApplicationCard({ application, isEditing, isFocused, foc
                         <Button className="float-end" variant="link"
                             onClick={(event) => {
                                 event.stopPropagation();
-                                editingApplication(application.id, false);
+                                saveChanges(application.id, draft);
                         }}>
                             save
                         </Button>
