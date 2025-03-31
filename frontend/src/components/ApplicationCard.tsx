@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Fragment } from "react/jsx-runtime";
-import { Application, applicationStatusLabel } from "../api/Application";
+import { Application, ApplicationStatusId, applicationStatusLabel } from "../api/Application";
 import ApplicationForm from "./ApplicationForm";
 
 interface ApplicationDetailProps {
@@ -39,10 +39,7 @@ export default function ApplicationCard({
     };
 
     const scrollCardIntoView = () => {
-        console.log("scrollIntoView");
-        console.log("ref", cardRef);
         if (cardRef?.current){
-            console.log("hey");
             cardRef.current.scrollIntoView();
         }
     };
@@ -73,7 +70,7 @@ export default function ApplicationCard({
                                 <div style={{marginTop: ".5rem"}}>
                                     <b>Source:</b> {application.source}
                                 </div>
-                                <div>
+                                <div style={{marginTop: ".5rem"}}>
                                     <b>Notes:</b>
                                     {application.note?.includes("\n") ?
                                     (<p
@@ -90,6 +87,22 @@ export default function ApplicationCard({
                                         {application.note}
                                     </span>
                                     }
+                                </div>
+                                <div style={{marginTop: ".5rem"}}>
+                                    <b>History:</b>
+                                    <ul>
+
+                                    {application.statusLog.map((logEntry: {status: ApplicationStatusId, timestamp: string}, i: number) => {
+                                        return <li key={i}>
+                                            {new Date(logEntry.timestamp).toLocaleDateString(
+                                                "en-US",
+                                                { weekday: "long", year: "numeric", month: "short", day: "numeric" }
+                                            )}
+                                            { " - " }
+                                            {applicationStatusLabel(logEntry.status)}
+                                        </li>;
+                                    })}
+                                    </ul>
                                 </div>
                             </Fragment>
                         )}

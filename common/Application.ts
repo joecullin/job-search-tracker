@@ -45,7 +45,10 @@ export type Application = {
     status: ApplicationStatusId;
     note: string;
     source: string;
-    statusLog: ApplicationStatusId[];
+    statusLog: {
+        status: ApplicationStatusId,
+        timestamp: string,
+    }[],
     firstContactDate: string;
     lastContactDate: string;
     reminderDate: string;

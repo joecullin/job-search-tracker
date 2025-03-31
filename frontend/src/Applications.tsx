@@ -34,6 +34,16 @@ function Screen() {
     };
 
     const saveChanges = (applicationId: string, application: Application) => {
+        // Add a record to statusLog, if this is a new application or if status changed.
+        if (application.statusLog.length === 0 ||
+            application.statusLog[application.statusLog.length-1].status !== application.status
+        ){
+            application.statusLog.push({
+               status: application.status,
+               timestamp: new Date().toISOString(),
+            });
+        }
+
         const applicationIndex = applications.findIndex((application: Application) => application.id === applicationId);
         if (applicationIndex > -1){
             applications[applicationIndex] = application
