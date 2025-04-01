@@ -27,7 +27,11 @@ export const ApplicationStatusDefs = [
     { id: <ApplicationStatusId>"offered", label: "offered", active: true },
     { id: <ApplicationStatusId>"unresponsive", label: "stopped responding", active: false },
     { id: <ApplicationStatusId>"applicationIgnored", label: "application ignored", active: false },
-    { id: <ApplicationStatusId>"applicationRejected", label: "application rejected", active: false },
+    {
+        id: <ApplicationStatusId>"applicationRejected",
+        label: "application rejected",
+        active: false,
+    },
     { id: <ApplicationStatusId>"declinedOffer", label: "declined offer", active: false },
     { id: <ApplicationStatusId>"acceptedOffer", label: "accepted offer", active: false },
     { id: <ApplicationStatusId>"withdrew", label: "withdrew myself", active: false },
@@ -46,9 +50,9 @@ export type Application = {
     note: string;
     source: string;
     statusLog: {
-        status: ApplicationStatusId,
-        timestamp: string,
-    }[],
+        status: ApplicationStatusId;
+        timestamp: string;
+    }[];
     firstContactDate: string;
     lastContactDate: string;
     reminderDate: string;

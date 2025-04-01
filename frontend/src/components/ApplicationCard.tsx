@@ -20,17 +20,17 @@ export default function ApplicationCard({
     isEditing,
     isFocused,
     focusApplication,
-    editingApplication
+    editingApplication,
 }: ApplicationDetailProps) {
-    const [draft, setDraft] = useState<Application|null>(application);
+    const [draft, setDraft] = useState<Application | null>(application);
     const cardRef = useRef<HTMLDivElement | null>(null);
 
-    if (!application || !draft){
+    if (!application || !draft) {
         return <Card className="applications-application-card">-</Card>;
     }
 
     const draftChanges = (changes: object) => {
-        if (draft){
+        if (draft) {
             setDraft({
                 ...draft,
                 ...changes,
@@ -39,7 +39,7 @@ export default function ApplicationCard({
     };
 
     const scrollCardIntoView = () => {
-        if (cardRef?.current){
+        if (cardRef?.current) {
             cardRef.current.scrollIntoView();
         }
     };
@@ -53,104 +53,123 @@ export default function ApplicationCard({
         >
             <Card.Body>
                 <Card.Title>
-                    {application.companyName}
+                    {application.companyName !== "" ? application.companyName : application.id}
                 </Card.Title>
-                {!isEditing &&
+                {!isEditing && (
                     <div>
                         <Fragment>
-                            <div>
-                                {application.role}
-                            </div>
-                            <div style={{fontStyle: "italic", fontSize: ".8rem"}}>
-                                {applicationStatusLabel(application.status)} {/* TODO: colors and/or icons for statuses */}
+                            <div>{application.role}</div>
+                            <div style={{ fontStyle: "italic", fontSize: ".8rem" }}>
+                                {applicationStatusLabel(application.status)}{" "}
+                                {/* TODO: colors and/or icons for statuses */}
                             </div>
                         </Fragment>
                         {isFocused && (
                             <Fragment>
-                                <div style={{marginTop: ".5rem"}}>
+                                <div style={{ marginTop: ".5rem" }}>
                                     <b>Source:</b> {application.source}
                                 </div>
-                                <div style={{marginTop: ".5rem"}}>
+                                <div style={{ marginTop: ".5rem" }}>
                                     <b>Notes:</b>
-                                    {application.note?.includes("\n") ?
-                                    (<p
-                                    style={{
-                                        wordWrap: "break-word",
-                                        whiteSpace: "pre-wrap",
-                                        margin: "0 0 0 1rem",
-                                        fontStyle: "italic",
-                                    }}
-                                    >
-                                        {application.note}
-                                    </p>)
-                                    : <span style={{fontStyle: "italic"}}>
-                                        {application.note}
-                                    </span>
-                                    }
+                                    {application.note?.includes("\n") ? (
+                                        <p
+                                            style={{
+                                                wordWrap: "break-word",
+                                                whiteSpace: "pre-wrap",
+                                                margin: "0 0 0 1rem",
+                                                fontStyle: "italic",
+                                            }}
+                                        >
+                                            {application.note}
+                                        </p>
+                                    ) : (
+                                        <span style={{ fontStyle: "italic" }}>
+                                            {application.note}
+                                        </span>
+                                    )}
                                 </div>
-                                <div style={{marginTop: ".5rem"}}>
+                                <div style={{ marginTop: ".5rem" }}>
                                     <b>History:</b>
                                     <ul>
-
-                                    {application.statusLog.map((logEntry: {status: ApplicationStatusId, timestamp: string}, i: number) => {
-                                        return <li key={i}>
-                                            {new Date(logEntry.timestamp).toLocaleDateString(
-                                                "en-US",
-                                                { weekday: "long", year: "numeric", month: "short", day: "numeric" }
-                                            )}
-                                            { " - " }
-                                            {applicationStatusLabel(logEntry.status)}
-                                        </li>;
-                                    })}
+                                        {application.statusLog.map(
+                                            (
+                                                logEntry: {
+                                                    status: ApplicationStatusId;
+                                                    timestamp: string;
+                                                },
+                                                i: number,
+                                            ) => {
+                                                return (
+                                                    <li key={i}>
+                                                        {new Date(
+                                                            logEntry.timestamp,
+                                                        ).toLocaleDateString("en-US", {
+                                                            weekday: "long",
+                                                            year: "numeric",
+                                                            month: "short",
+                                                            day: "numeric",
+                                                        })}
+                                                        {" - "}
+                                                        {applicationStatusLabel(logEntry.status)}
+                                                    </li>
+                                                );
+                                            },
+                                        )}
                                     </ul>
                                 </div>
                             </Fragment>
                         )}
                     </div>
-                }
+                )}
                 {isEditing && (
-                    <div style={{
-                        backgroundColor: "lightgray",
-                        padding: "1rem",
-                    }}>
-                        <ApplicationForm
-                            application={draft}
-                            saveChanges={draftChanges}
-                        />
+                    <div
+                        style={{
+                            backgroundColor: "lightgray",
+                            padding: "1rem",
+                        }}
+                    >
+                        <ApplicationForm application={draft} saveChanges={draftChanges} />
                     </div>
                 )}
             </Card.Body>
             <Card.Footer>
-                {!isEditing &&
-                    <Button variant="link"
+                {!isEditing && (
+                    <Button
+                        variant="link"
                         onClick={(event) => {
                             event.stopPropagation();
                             editingApplication(application.id, true);
                             scrollCardIntoView();
-                    }}>
+                        }}
+                    >
                         edit
                     </Button>
-                }
-                {isEditing &&
+                )}
+                {isEditing && (
                     <Fragment>
-                        <Button className="float-end" variant="link"
+                        <Button
+                            className="float-end"
+                            variant="link"
                             onClick={(event) => {
                                 event.stopPropagation();
                                 saveChanges(application.id, draft);
-                        }}>
+                            }}
+                        >
                             save
                         </Button>
-                        <Button className="float-end" variant="link"
+                        <Button
+                            className="float-end"
+                            variant="link"
                             onClick={(event) => {
                                 event.stopPropagation();
                                 editingApplication(application.id, false);
-                        }}>
+                            }}
+                        >
                             cancel
                         </Button>
                     </Fragment>
-                }
+                )}
             </Card.Footer>
         </Card>
     );
 }
-

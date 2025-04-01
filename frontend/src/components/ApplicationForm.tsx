@@ -1,4 +1,4 @@
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Application } from "../api/Application";
@@ -10,38 +10,37 @@ interface ApplicationFormProps {
 }
 
 export default function ApplicationForm({ application, saveChanges }: ApplicationFormProps) {
-
     const handleChangeNote = (value: string) => {
-        const newValue = value ? value.slice(0, 50000): ""; //TODO: more explicit validation and feedback.
-        saveChanges({note: newValue});
+        const newValue = value ? value.slice(0, 50000) : ""; //TODO: more explicit validation and feedback.
+        saveChanges({ note: newValue });
     };
 
     const handleChangeRole = (value: string) => {
-        saveChanges({role: value});
+        saveChanges({ role: value });
     };
 
     const handleChangeCompany = (value: string) => {
-        saveChanges({companyName: value});
+        saveChanges({ companyName: value });
     };
 
     const handleChangeSource = (value: string) => {
-        saveChanges({source: value});
+        saveChanges({ source: value });
     };
 
     const handleChangeStatus = (value: string) => {
-        saveChanges({status: value});
+        saveChanges({ status: value });
     };
 
     const handleChangeFirstContact = (value: string) => {
-        saveChanges({firstContactDate: value});
+        saveChanges({ firstContactDate: value });
     };
 
     const handleChangeLastContact = (value: string) => {
-        saveChanges({lastContactDate: value});
+        saveChanges({ lastContactDate: value });
     };
 
     const handleChangeReminderDate = (value: string) => {
-        saveChanges({reminderDate: value});
+        saveChanges({ reminderDate: value });
     };
 
     const notesInputHeight = (note: string) => {
@@ -49,14 +48,13 @@ export default function ApplicationForm({ application, saveChanges }: Applicatio
         let height = 1;
 
         const charCount = note.length;
-        const lineBreakCount = [...note.matchAll(/$/mg)].length;
-        if (lineBreakCount > 0){
+        const lineBreakCount = [...note.matchAll(/$/gm)].length;
+        if (lineBreakCount > 0) {
             height = lineBreakCount;
-        }
-        else if (charCount > 80){
+        } else if (charCount > 80) {
             height = Math.ceil(charCount / 80);
         }
-        if (height > maxHeight){
+        if (height > maxHeight) {
             height = maxHeight;
         }
         return height;
@@ -103,10 +101,16 @@ export default function ApplicationForm({ application, saveChanges }: Applicatio
                                 handleChangeStatus(event.target.value);
                             }}
                         >
-                            <option value="" key="blank">Choose a status</option>
-                            {ApplicationStatusDefs.map(statusDef => {
+                            <option value="" key="blank">
+                                Choose a status
+                            </option>
+                            {ApplicationStatusDefs.map((statusDef) => {
                                 const statusId = statusDef.id;
-                                return <option value={statusId} key={statusId}>{applicationStatusLabel(statusId)}</option>
+                                return (
+                                    <option value={statusId} key={statusId}>
+                                        {applicationStatusLabel(statusId)}
+                                    </option>
+                                );
                             })}
                         </Form.Select>
                     </Form.Group>
@@ -181,4 +185,3 @@ export default function ApplicationForm({ application, saveChanges }: Applicatio
         </Form>
     );
 }
-

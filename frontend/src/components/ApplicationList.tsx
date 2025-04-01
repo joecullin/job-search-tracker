@@ -20,9 +20,9 @@ export default function ApplicationList({
     editingApplication,
     saveChanges,
 }: ApplicationListProps) {
-
     // When a card is focused, make it twice as wide.
-    const adjustCardWidth = (cols: number, applicationId: string) => focusedApplications.includes(applicationId) ? cols*2 : cols;
+    const adjustCardWidth = (cols: number, applicationId: string) =>
+        focusedApplications.includes(applicationId) ? cols * 2 : cols;
 
     return (
         <Row>
@@ -40,7 +40,7 @@ export default function ApplicationList({
                         focusApplication={focusApplication}
                         editingApplication={editingApplication}
                         saveChanges={saveChanges}
-                        />
+                    />
                 </Col>
             ))}
         </Row>
