@@ -56,7 +56,4 @@ export type Application = {
     firstContactDate: string;
     lastContactDate: string;
     reminderDate: string;
-    /* TODO: other fields to track:
-      - add date to each statusLog entry
-  */
 };

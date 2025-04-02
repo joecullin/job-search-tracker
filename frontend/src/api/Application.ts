@@ -6,11 +6,9 @@ export * from "../../../common/Application";
 const apiBaseUrl = "http://localhost:3000/api/v1";
 
 export const getApplications = async (): Promise<Application[]> => {
-    // const applicationArray: Application[] = [];
-
-    const request = `${apiBaseUrl}/applications`;
+    const requestUrl = `${apiBaseUrl}/applications`;
     try {
-        const response = await fetch(request);
+        const response = await fetch(requestUrl);
         try {
             const applications = await response.json();
             return applications;
@@ -21,6 +19,21 @@ export const getApplications = async (): Promise<Application[]> => {
         console.log(`error fetching data!`, error);
     }
     return [];
+};
+
+export const saveApplications = async (applications: Application[]): Promise<void> => {
+    const requestUrl = `${apiBaseUrl}/applications`;
+    try {
+        await fetch(requestUrl, {
+            method: "PUT",
+            body: JSON.stringify(applications),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    } catch (error) {
+        console.log(`error saving data!`, error);
+    }
 };
 
 export const newApplication = () => {

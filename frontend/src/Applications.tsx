@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import { Application, getApplications, newApplication } from "./api/Application";
+import { Application, getApplications, saveApplications, newApplication } from "./api/Application";
 
 import ApplicationList from "./components/ApplicationList";
 
@@ -44,8 +44,6 @@ function Screen() {
             });
         }
 
-        // Save to backend.
-
         // Update our local copy.
         const applicationIndex = applications.findIndex(
             (application: Application) => application.id === applicationId,
@@ -54,6 +52,9 @@ function Screen() {
             applications[applicationIndex] = application;
             setApplications(applications);
         }
+
+        // Save to backend.
+        saveApplications(applications);
 
         // Close edit mode.
         editingApplication(applicationId, false);

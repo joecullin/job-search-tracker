@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc --build \"ts.config.json\"",
-    "sankey": "npm run build && node dist/sankey-generator.js"
+    "sankey": "npm run build && node dist/utils/src/sankey-generator.js",
+    "import": "npm run build && node dist/utils/src/import.js"
   },
   "author": "Joe Cullin",
   "devDependencies": {
@@ -16,6 +17,7 @@
     "typescript-eslint": "^8.26.1"
   },
   "dependencies": {
-    "csv-parse": "^5.6.0"
+    "csv-parse": "^5.6.0",
+    "uuid": "^11.1.0"
   }
 }
