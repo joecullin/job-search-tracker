@@ -13,8 +13,9 @@ const inputPath = "/Users/joecullin/Downloads/job_tracking_export_20250401.txt";
 const defaultYear = 2025;
 const defaultTimestamp = "2025-03-01T13:00:00Z";
 
-interface ApplicationRawData extends Omit<Application, "id"|"statusLog|companyName|firstContactDate|reminderDate|lastContactDate">{
+interface ApplicationRawData extends Omit<Application, "id"|"statusLog|companyName|firstContactDate|reminderDate|lastContactDate|notes">{
     company: string, // slightly different column name
+    notes: string, // slightly different column name
     firstContact: string, // slightly different column name
     lastContact: string, // slightly different column name
     reminder: string, // slightly different column name
@@ -41,7 +42,7 @@ const getData = async (inputPath: string): Promise<Application[]> => {
                 companyName: rawApplication.company,
                 role: rawApplication.role,
                 status: rawApplication.status,
-                note: rawApplication.note,
+                note: rawApplication.notes,
                 source: rawApplication.source,
                 firstContactDate: formatDate(rawApplication.firstContact),
                 lastContactDate: formatDate(rawApplication.lastContact),

@@ -83,7 +83,10 @@ export default function ApplicationCard({
                                             {application.note}
                                         </p>
                                     ) : (
-                                        <span style={{ fontStyle: "italic" }}>
+                                        <span style={{
+                                            margin: "0 0 0 0.25rem",
+                                            fontStyle: "italic"
+                                        }}>
                                             {application.note}
                                         </span>
                                     )}

@@ -2,6 +2,7 @@
   "name": "job-search-tracker-backend",
   "main": "index.js",
   "scripts": {
+    "backup": "cp data/applications.json /Users/joecullin/Dropbox/jobs/backups/applications_`date +\"%Y%m%d_%H_%M\"`.json",
     "lint": "pushd backend && npm run lint && popd && pushd common && npm run lint && popd && pushd frontend/src && npm run lint && popd",
     "format": "pushd backend; npm run format; popd; pushd common; npm run format; popd; pushd frontend/src; npm run format; popd"
   }

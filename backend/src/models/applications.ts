@@ -12,5 +12,5 @@ export const getAll = async (): Promise<Application[]> => {
 };
 
 export const saveAll = async (applicationArray: Application[]): Promise<void> => {
-    await writeFileSync(applicationsDataFile, JSON.stringify(applicationArray), "utf-8");
+    await writeFileSync(applicationsDataFile, JSON.stringify(applicationArray, null, 4), "utf-8");
 };

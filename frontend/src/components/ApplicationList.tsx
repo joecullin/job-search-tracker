@@ -30,7 +30,7 @@ export default function ApplicationList({
                 <Col
                     key={application.id}
                     sm={adjustCardWidth(6, application.id)}
-                    md={adjustCardWidth(3, application.id)}
+                    md={adjustCardWidth(2, application.id)}
                 >
                     <ApplicationCard
                         key={application.id}
