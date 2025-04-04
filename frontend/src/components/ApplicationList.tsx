@@ -38,7 +38,7 @@ export default function ApplicationList({
             <Row>
                 <Col>
                     {filters.length > 0
-                        ? `Filtered to ${filterApplications.length} of ${applications.length} total applications.`
+                        ? `Filtered to ${filteredApplications.length} of ${applications.length} total applications.`
                         : `Showing all ${applications.length} applications.`}
                 </Col>
             </Row>
