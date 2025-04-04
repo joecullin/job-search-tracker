@@ -2,12 +2,7 @@ import { useRef, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Fragment } from "react/jsx-runtime";
-import {
-    Application,
-    applicationStatusColor,
-    ApplicationStatusId,
-    applicationStatusLabel,
-} from "../api/Application";
+import { Application, applicationStatusColor, ApplicationStatusId, applicationStatusLabel } from "../api/Application";
 import ApplicationForm from "./ApplicationForm";
 
 interface ApplicationDetailProps {
@@ -121,9 +116,7 @@ export default function ApplicationCard({
                                             ) => {
                                                 return (
                                                     <li key={i}>
-                                                        {new Date(
-                                                            logEntry.timestamp,
-                                                        ).toLocaleDateString("en-US", {
+                                                        {new Date(logEntry.timestamp).toLocaleDateString("en-US", {
                                                             weekday: "long",
                                                             year: "numeric",
                                                             month: "short",

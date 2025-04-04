@@ -1,4 +1,4 @@
-import { Application } from "../../../common/Application";
+import { Application, ApplicationFilter, ApplicationStatusDefs, ApplicationStatusId } from "../../../common/Application";
 import { v4 as uuidv4 } from "uuid";
 
 export * from "../../../common/Application";
@@ -19,6 +19,37 @@ export const getApplications = async (): Promise<Application[]> => {
         console.log(`error fetching data!`, error);
     }
     return [];
+};
+
+export const filterApplications = (applications: Application[], filters: ApplicationFilter[]): Application[] => {
+    if (filters.length) {
+        type StatusMapping = {
+            [key in ApplicationStatusId]?: {
+                active: boolean;
+                progressing: boolean | undefined;
+            };
+        };
+        const statusMappings: StatusMapping = {};
+        ApplicationStatusDefs.forEach((statusDef) => {
+            statusMappings[statusDef.id] = {
+                active: statusDef.active,
+                progressing: statusDef.progressing,
+            };
+        });
+        let filtered = applications;
+        for (const filter of filters) {
+            if (filter === "status:active") {
+                filtered = filtered.filter((app) => statusMappings[app.status]?.active);
+            } else if (filter === "status:inactive") {
+                filtered = filtered.filter((app) => !statusMappings[app.status]?.active);
+            } else if (filter === "status:progressing") {
+                filtered = filtered.filter((app) => statusMappings[app.status]?.progressing);
+            }
+        }
+        return filtered;
+    } else {
+        return applications;
+    }
 };
 
 export const saveApplications = async (applications: Application[]): Promise<void> => {

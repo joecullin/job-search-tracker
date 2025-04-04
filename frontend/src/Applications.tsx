@@ -4,9 +4,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import Dropdown from "react-bootstrap/Dropdown";
 import dayjs from "dayjs";
 
-import { Application, getApplications, saveApplications, newApplication } from "./api/Application";
+import { Application, ApplicationFilter, getApplications, saveApplications, newApplication } from "./api/Application";
 
 import ApplicationList from "./components/ApplicationList";
 
@@ -14,6 +15,7 @@ function Screen() {
     const [applications, setApplications] = useState<Application[]>([]);
     const [focusedApplications, setFocusedApplications] = useState<string[]>([]);
     const [editingApplications, setEditingApplications] = useState<string[]>([]);
+    const [filters, setFilters] = useState<ApplicationFilter[]>(["status:active"]);
 
     const focusApplication = (applicationId: string, focused: boolean) => {
         const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
@@ -46,9 +48,7 @@ function Screen() {
         }
 
         // Update our local copy.
-        const applicationIndex = applications.findIndex(
-            (application: Application) => application.id === applicationId,
-        );
+        const applicationIndex = applications.findIndex((application: Application) => application.id === applicationId);
         if (applicationIndex > -1) {
             applications[applicationIndex] = application;
             setApplications(applications);
@@ -106,11 +106,61 @@ function Screen() {
                         <b>Today: {todayCount}</b>. past 3 days: {lastThreeDaysCount}.
                     </Col>
                     <Col>
-                        <Button
-                            variant="primary"
-                            className="float-end"
-                            onClick={() => addApplication()}
+                        Filters:
+                        <Dropdown
+                            style={{
+                                display: "inline-block",
+                                paddingLeft: "1rem",
+                            }}
                         >
+                            <Dropdown.Toggle
+                                variant={filters.length ? "secondary" : "outline-secondary"}
+                                id="dropdown-basic"
+                                size="sm"
+                            >
+                                Status
+                                {filters.includes("status:active")
+                                    ? ": active"
+                                    : filters.includes("status:inactive")
+                                      ? ": inactive"
+                                      : filters.includes("status:progressing")
+                                        ? ": progressing"
+                                        : ""}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu variant="primary">
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setFilters([]);
+                                    }}
+                                >
+                                    All
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setFilters(["status:active"]);
+                                    }}
+                                >
+                                    Active
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setFilters(["status:progressing"]);
+                                    }}
+                                >
+                                    Progressing
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setFilters(["status:inactive"]);
+                                    }}
+                                >
+                                    Inactive
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Col>
+                    <Col>
+                        <Button variant="primary" className="float-end" onClick={() => addApplication()}>
                             New application
                         </Button>
                     </Col>
@@ -121,15 +171,10 @@ function Screen() {
                             applications={applications}
                             focusedApplications={focusedApplications}
                             editingApplications={editingApplications}
-                            focusApplication={(applicationId, focused) =>
-                                focusApplication(applicationId, focused)
-                            }
-                            editingApplication={(applicationId, editing) =>
-                                editingApplication(applicationId, editing)
-                            }
-                            saveChanges={(applicationId, changes) =>
-                                saveChanges(applicationId, changes)
-                            }
+                            focusApplication={(applicationId, focused) => focusApplication(applicationId, focused)}
+                            editingApplication={(applicationId, editing) => editingApplication(applicationId, editing)}
+                            saveChanges={(applicationId, changes) => saveChanges(applicationId, changes)}
+                            filters={filters}
                         />
                     </Col>
                 </Row>

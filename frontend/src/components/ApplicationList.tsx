@@ -1,7 +1,8 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import type { Application } from "../api/Application";
+import { Application, ApplicationFilter, filterApplications } from "../api/Application";
 import ApplicationCard from "./ApplicationCard";
+import { Fragment } from "react/jsx-runtime";
 
 interface ApplicationListProps {
     applications: Application[];
@@ -10,6 +11,7 @@ interface ApplicationListProps {
     focusApplication: (applicationId: string, focused: boolean) => void;
     editingApplication: (applicationId: string, focused: boolean) => void;
     saveChanges: (applicationId: string, application: Application) => void;
+    filters: ApplicationFilter[];
 }
 
 export default function ApplicationList({
@@ -19,6 +21,7 @@ export default function ApplicationList({
     focusApplication,
     editingApplication,
     saveChanges,
+    filters,
 }: ApplicationListProps) {
     // When a card is focused, make it twice as wide.
     const cardWidth = (size: string, applicationId: string) => {
@@ -29,34 +32,40 @@ export default function ApplicationList({
         }
     };
 
+    const filteredApplications = filterApplications(applications, filters);
     return (
-        <Row>
-            {applications
-                .sort((a, b) => {
-                    const firstContact = b.firstContactDate.localeCompare(a.firstContactDate);
-                    if (firstContact !== 0) {
-                        return firstContact;
-                    }
-                    // maybe sub-sort by status timestamp here?
-                    return 0;
-                })
-                .map((application) => (
-                    <Col
-                        key={application.id}
-                        sm={cardWidth("sm", application.id)}
-                        md={cardWidth("md", application.id)}
-                    >
-                        <ApplicationCard
-                            key={application.id}
-                            application={application}
-                            isEditing={editingApplications.includes(application.id)}
-                            isFocused={focusedApplications.includes(application.id)}
-                            focusApplication={focusApplication}
-                            editingApplication={editingApplication}
-                            saveChanges={saveChanges}
-                        />
-                    </Col>
-                ))}
-        </Row>
+        <Fragment>
+            <Row>
+                <Col>
+                    {filters.length > 0
+                        ? `Filtered to ${filterApplications.length} of ${applications.length} total applications.`
+                        : `Showing all ${applications.length} applications.`}
+                </Col>
+            </Row>
+            <Row>
+                {filteredApplications
+                    .sort((a, b) => {
+                        const firstContact = b.firstContactDate.localeCompare(a.firstContactDate);
+                        if (firstContact !== 0) {
+                            return firstContact;
+                        }
+                        // maybe sub-sort by status timestamp here?
+                        return 0;
+                    })
+                    .map((application) => (
+                        <Col key={application.id} sm={cardWidth("sm", application.id)} md={cardWidth("md", application.id)}>
+                            <ApplicationCard
+                                key={application.id}
+                                application={application}
+                                isEditing={editingApplications.includes(application.id)}
+                                isFocused={focusedApplications.includes(application.id)}
+                                focusApplication={focusApplication}
+                                editingApplication={editingApplication}
+                                saveChanges={saveChanges}
+                            />
+                        </Col>
+                    ))}
+            </Row>
+        </Fragment>
     );
 }
