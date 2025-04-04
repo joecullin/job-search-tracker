@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { Fragment } from "react/jsx-runtime";
 import { Application, applicationStatusColor, ApplicationStatusId, applicationStatusLabel } from "../api/Application";
 import ApplicationForm from "./ApplicationForm";
+import RelativeDatetime from "./RelativeDatetime";
 
 interface ApplicationDetailProps {
     application: Application | null;
@@ -63,15 +64,25 @@ export default function ApplicationCard({
                 {!isEditing && (
                     <div>
                         <Fragment>
-                            <div>{application.role}</div>
+                            <div>{application.role || "-"}</div>
                             <div
                                 style={{
-                                    fontStyle: "italic",
                                     fontSize: ".8rem",
-                                    color: applicationStatusColor(application.status),
                                 }}
                             >
-                                {applicationStatusLabel(application.status)}{" "}
+                                <span
+                                    style={{
+                                        fontStyle: "italic",
+                                        color: applicationStatusColor(application.status),
+                                    }}
+                                >
+                                    {applicationStatusLabel(application.status)}{" "}
+                                </span>
+                                {application.reminderDate && (
+                                    <span className="float-end">
+                                        ⏰ <RelativeDatetime label="reminder:" timestamp={application.reminderDate} />
+                                    </span>
+                                )}
                             </div>
                         </Fragment>
                         {isFocused && (
@@ -145,7 +156,7 @@ export default function ApplicationCard({
                     </div>
                 )}
             </Card.Body>
-            <Card.Footer>
+            <Card.Footer style={{ padding: ".1rem" }}>
                 {!isEditing && (
                     <Button
                         variant="link"

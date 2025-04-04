@@ -53,9 +53,9 @@ export const applicationStatusColor = (statusId: ApplicationStatusId): string =>
     }
     const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
     if (statusProperties?.active === false) {
-        return "#dc3545";
+        return "#6a7282";
     }
-    return "#6c757d";
+    return "#0084d1";
 };
 
 export const applicationStatusLabel = (statusId: ApplicationStatusId): string => {
