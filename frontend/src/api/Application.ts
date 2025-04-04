@@ -37,6 +37,8 @@ export const saveApplications = async (applications: Application[]): Promise<voi
 };
 
 export const newApplication = () => {
+    //TODO: make this save local time. Or just switch to saving iso 8601.
+    //Not a high priority. only matters for applications submitted after 8pm.
     const currentDate = new Date().toISOString().substring(0, 10);
     const application = <Application>{
         id: uuidv4(),

@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import dayjs from "dayjs";
 
 import { Application, getApplications, saveApplications, newApplication } from "./api/Application";
 
@@ -76,6 +77,24 @@ function Screen() {
         loadData();
     }, []);
 
+    // Some rough counts for now, until I add a better stats view.
+    const startOfToday = dayjs().startOf("date");
+    const threeDaysAgo = dayjs().startOf("date").subtract(3, "day");
+    const todayCount = applications.filter((app) => {
+        if (app.statusLog.length) {
+            const createDate = dayjs(app.statusLog[0].timestamp);
+            return createDate.isAfter(startOfToday);
+        }
+        return false;
+    }).length;
+    const lastThreeDaysCount = applications.filter((app) => {
+        if (app.statusLog.length) {
+            const createDate = dayjs(app.statusLog[0].timestamp);
+            return createDate.isAfter(threeDaysAgo);
+        }
+        return false;
+    }).length;
+
     return (
         <div>
             <div>
@@ -83,6 +102,9 @@ function Screen() {
             </div>
             <Container className="mt-4">
                 <Row>
+                    <Col>
+                        <b>Today: {todayCount}</b>. past 3 days: {lastThreeDaysCount}.
+                    </Col>
                     <Col>
                         <Button
                             variant="primary"

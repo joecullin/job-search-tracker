@@ -21,28 +21,42 @@ export default function ApplicationList({
     saveChanges,
 }: ApplicationListProps) {
     // When a card is focused, make it twice as wide.
-    const adjustCardWidth = (cols: number, applicationId: string) =>
-        focusedApplications.includes(applicationId) ? cols * 2 : cols;
+    const cardWidth = (size: string, applicationId: string) => {
+        if (focusedApplications.includes(applicationId)) {
+            return 12;
+        } else {
+            return size === "md" ? 2 : 6;
+        }
+    };
 
     return (
         <Row>
-            {applications.map((application) => (
-                <Col
-                    key={application.id}
-                    sm={adjustCardWidth(6, application.id)}
-                    md={adjustCardWidth(2, application.id)}
-                >
-                    <ApplicationCard
+            {applications
+                .sort((a, b) => {
+                    const firstContact = b.firstContactDate.localeCompare(a.firstContactDate);
+                    if (firstContact !== 0) {
+                        return firstContact;
+                    }
+                    // maybe sub-sort by status timestamp here?
+                    return 0;
+                })
+                .map((application) => (
+                    <Col
                         key={application.id}
-                        application={application}
-                        isEditing={editingApplications.includes(application.id)}
-                        isFocused={focusedApplications.includes(application.id)}
-                        focusApplication={focusApplication}
-                        editingApplication={editingApplication}
-                        saveChanges={saveChanges}
-                    />
-                </Col>
-            ))}
+                        sm={cardWidth("sm", application.id)}
+                        md={cardWidth("md", application.id)}
+                    >
+                        <ApplicationCard
+                            key={application.id}
+                            application={application}
+                            isEditing={editingApplications.includes(application.id)}
+                            isFocused={focusedApplications.includes(application.id)}
+                            focusApplication={focusApplication}
+                            editingApplication={editingApplication}
+                            saveChanges={saveChanges}
+                        />
+                    </Col>
+                ))}
         </Row>
     );
 }

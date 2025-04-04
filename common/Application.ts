@@ -37,6 +37,29 @@ export const ApplicationStatusDefs = [
     { id: <ApplicationStatusId>"withdrew", label: "withdrew myself", active: false },
 ];
 
+// Move these to css later? Not sure how I'll use them in charts yet.
+export const applicationStatusColor = (statusId: ApplicationStatusId): string => {
+    if (
+        [
+            "initialScreen",
+            "interview1",
+            "interview2",
+            "interview3",
+            "interview4",
+            "interview5",
+            "offered",
+            "acceptedOffer",
+        ].includes(statusId)
+    ) {
+        return "#198754";
+    }
+    const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
+    if (statusProperties?.active === false) {
+        return "#dc3545";
+    }
+    return "#6c757d";
+};
+
 export const applicationStatusLabel = (statusId: ApplicationStatusId): string => {
     const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
     return statusProperties?.label ?? statusId;

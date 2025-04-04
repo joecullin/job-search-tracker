@@ -2,7 +2,12 @@ import { useRef, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Fragment } from "react/jsx-runtime";
-import { Application, ApplicationStatusId, applicationStatusLabel } from "../api/Application";
+import {
+    Application,
+    applicationStatusColor,
+    ApplicationStatusId,
+    applicationStatusLabel,
+} from "../api/Application";
 import ApplicationForm from "./ApplicationForm";
 
 interface ApplicationDetailProps {
@@ -52,16 +57,26 @@ export default function ApplicationCard({
             ref={cardRef}
         >
             <Card.Body>
-                <Card.Title>
+                <Card.Title
+                    style={{
+                        overflowX: "clip",
+                        whiteSpace: "nowrap",
+                    }}
+                >
                     {application.companyName !== "" ? application.companyName : application.id}
                 </Card.Title>
                 {!isEditing && (
                     <div>
                         <Fragment>
                             <div>{application.role}</div>
-                            <div style={{ fontStyle: "italic", fontSize: ".8rem" }}>
+                            <div
+                                style={{
+                                    fontStyle: "italic",
+                                    fontSize: ".8rem",
+                                    color: applicationStatusColor(application.status),
+                                }}
+                            >
                                 {applicationStatusLabel(application.status)}{" "}
-                                {/* TODO: colors and/or icons for statuses */}
                             </div>
                         </Fragment>
                         {isFocused && (
@@ -83,10 +98,12 @@ export default function ApplicationCard({
                                             {application.note}
                                         </p>
                                     ) : (
-                                        <span style={{
-                                            margin: "0 0 0 0.25rem",
-                                            fontStyle: "italic"
-                                        }}>
+                                        <span
+                                            style={{
+                                                margin: "0 0 0 0.25rem",
+                                                fontStyle: "italic",
+                                            }}
+                                        >
                                             {application.note}
                                         </span>
                                     )}
