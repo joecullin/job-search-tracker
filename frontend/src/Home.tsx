@@ -13,6 +13,9 @@ function Screen() {
                         <Button variant="link" href="/applications">
                             Applications
                         </Button>
+                        <Button variant="link" href="/analysis">
+                            Analysis &amp; Visuals
+                        </Button>
                     </Col>
                 </Row>
             </Container>
