@@ -9,6 +9,15 @@ interface ComponentProps {
     applications: Application[];
 }
 
+// Note:
+// - I didn't think through boundaries or local vs UTC much.
+//   - Hopefully I won't still be job hunting in December–January,
+//   - For this kind of graphical view, I'm not worried about timezones being off by one day.
+
+//TODO:
+// - make the boxes square instead of rectangle?
+// - rounded corners on boxes?
+
 const ApplicationTimeline = ({ applications }: ComponentProps) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -73,9 +82,9 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                 y: {
                     axis: "left",
                     domain: [-1, 0, 1, 2, 3, 4, 5, 6], // -1 for empty top row, 0-6 for Sun-Sat.
-                    ticks: [0, 1, 2, 3, 4, 5, 6], // don’t draw a tick for -1
+                    ticks: [1, 2, 3, 4, 5], // don’t show label for Months row, or for Sat & Sun.
                     tickSize: 0,
-                    tickFormat: Plot.formatWeekday("en", "narrow"),
+                    tickFormat: Plot.formatWeekday("en"),
                 },
                 fy: { tickFormat: "" },
                 color: {
