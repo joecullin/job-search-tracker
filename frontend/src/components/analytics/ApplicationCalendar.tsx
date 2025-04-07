@@ -26,34 +26,57 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                 dateCounts[date]++;
             });
 
+            const jan1 = dayjs().startOf("year");
+            const jan1Date = jan1.toDate();
+            const getWeekNumber = (date: Date) => {
+                return Math.ceil(((date.getTime() - jan1Date.getTime()) / 86400000 + jan1Date.getDay() + 1) / 7);
+            };
+
             // Fill the rest of the year with blanks.
-            const januaryFirst = dayjs().startOf("year");
+            // Also initialize month labels.
+            const monthLabels = [
+                {
+                    weekNumber: getWeekNumber(jan1Date),
+                    label: jan1.format("MMM"),
+                },
+            ];
             for (let i = 1; i < 364; i++) {
-                const day = januaryFirst.add(i, "day");
+                const day = jan1.add(i, "day");
                 dateCounts[day.format("YYYY-MM-DD")] ||= 0;
+
+                // If we crossed into a new month, save the month label:
+                const yesterday = jan1.add(i - 1, "day");
+                if (day.get("month") !== yesterday.get("month")) {
+                    monthLabels.push({
+                        weekNumber: getWeekNumber(day.toDate()),
+                        label: day.format("MMM"),
+                    });
+                }
             }
 
             const plotData = Object.keys(dateCounts).map((dateString) => {
                 const date = new Date(dateString);
-                const firstOfYear = dayjs(dateString).startOf("year");
+                const weekNumber = getWeekNumber(date);
                 return {
-                    dateString,
+                    displayDate: dayjs(date).format("MMM D"),
                     date,
                     dayOfWeek: date.getDay(),
                     monthNumber: date.getMonth(),
-                    weekNumber: Math.ceil(
-                        ((date.getTime() - firstOfYear.toDate().getTime()) / 86400000 + firstOfYear.toDate().getDay() + 1) / 7,
-                    ),
+                    weekNumber,
                     count: dateCounts[dateString],
                 };
             });
 
-            //TODO: month labels in x axis (like github profile) would be nice.
-
             const plot = Plot.plot({
                 padding: 0,
                 x: { axis: null },
-                y: { tickFormat: Plot.formatWeekday("en", "narrow"), tickSize: 0 },
+                y: {
+                    axis: "left",
+                    domain: [-1, 0, 1, 2, 3, 4, 5, 6], // -1 for empty top row, 0-6 for Sun-Sat.
+                    ticks: [0, 1, 2, 3, 4, 5, 6], // don’t draw a tick for -1
+                    tickSize: 0,
+                    tickFormat: Plot.formatWeekday("en", "narrow"),
+                },
                 fy: { tickFormat: "" },
                 color: {
                     scheme: "PiYG",
@@ -66,8 +89,15 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                         y: (d) => d.dayOfWeek,
                         fy: (d) => d.date.getFullYear(),
                         fill: (d) => (d.count > 0 ? d.count + 3 : 0), // boost a bit, so 1's aren't too light.
-                        title: (d) => (d.dateString ? `${d.dateString}: ${d.count}` : "-"),
+                        title: (d) => (d.displayDate ? `${d.displayDate}: ${d.count} applications` : "-"),
                         inset: 0.5,
+                    }),
+
+                    Plot.text(monthLabels, {
+                        text: (d) => d.label,
+                        frameAnchor: "top-left",
+                        x: (d) => d.weekNumber,
+                        y: -1,
                     }),
                 ],
             });
