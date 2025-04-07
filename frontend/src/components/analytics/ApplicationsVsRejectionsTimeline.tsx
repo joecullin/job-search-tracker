@@ -94,6 +94,9 @@ const ApplicationsVsRejectionsTimeline = ({ applications }: ComponentProps) => {
                 ],
             });
 
+            plot.style.border = "1px solid lightgray";
+            plot.style.padding = "1rem";
+
             containerRef.current.append(plot);
             // Clean up before unmount
             return () => plot.remove();

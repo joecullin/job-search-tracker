@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
 import { Application, getApplications } from "./api/Application";
-import ApplicationTimeline from "./components/analytics/ApplicationTimeline";
+import ApplicationCalendar from "./components/analytics/ApplicationCalendar";
 import ApplicationsVsRejectionsTimeline from "./components/analytics/ApplicationsVsRejectionsTimeline";
 
 import NavBreadcrumbs from "./components/NavBreadcrumbs";
@@ -27,12 +27,12 @@ function Screen() {
             <Container className="mt-4">
                 <Row>
                     <Col xs={12}>
-                        <b>Applications per day</b>
-                        {applications && <ApplicationTimeline applications={applications} />}
+                        <b>Applications</b>
+                        {applications && <ApplicationCalendar applications={applications} />}
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} style={{ paddingTop: "3rem" }}>
+                    <Col xs={12} style={{ paddingTop: "1rem" }}>
                         <b>Applications &amp; rejections</b>
                         {applications && <ApplicationsVsRejectionsTimeline applications={applications} />}
                     </Col>
