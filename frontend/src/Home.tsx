@@ -10,13 +10,13 @@ function Screen() {
             <Container className="mt-4">
                 <Row>
                     <Col>
+                        <p>Job search tools</p>
                         <p>
-                            Job search tools
-                        </p>
-                        <p>
-                            See <a href="https://github.com/joecullin/job-search-tracker" target="_blank">
+                            See{" "}
+                            <a href="https://github.com/joecullin/job-search-tracker" target="_blank">
                                 github/joecullin/job-search-tracker
-                            </a>.
+                            </a>
+                            .
                         </p>
                     </Col>
                 </Row>

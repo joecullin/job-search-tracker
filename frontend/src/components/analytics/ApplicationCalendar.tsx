@@ -50,7 +50,7 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
 
                 // Bail out if we're near the end and it's a Sunday.
                 // (Makes a clean right edge of the calendar.)
-                if ((i + 7) > maxDays && day.day() === 0){
+                if (i + 7 > maxDays && day.day() === 0) {
                     break;
                 }
 
