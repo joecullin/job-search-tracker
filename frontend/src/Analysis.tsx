@@ -6,7 +6,6 @@ import Container from "react-bootstrap/Container";
 import { Application, getApplications } from "./api/Application";
 import ApplicationCalendar from "./components/analytics/ApplicationCalendar";
 import ApplicationsVsRejectionsTimeline from "./components/analytics/ApplicationsVsRejectionsTimeline";
-
 import TopNav from "./components/TopNav";
 
 function Screen() {
@@ -33,7 +32,7 @@ function Screen() {
                 </Row>
                 <Row>
                     <Col xs={12} style={{ paddingTop: "1rem" }}>
-                        <b>Applications &amp; rejections</b>
+                        <b>Applications vs. rejections</b>
                         {applications && <ApplicationsVsRejectionsTimeline applications={applications} />}
                     </Col>
                 </Row>

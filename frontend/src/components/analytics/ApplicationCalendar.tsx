@@ -36,7 +36,7 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                 return Math.ceil(((date.getTime() - startDate.getTime()) / 86400000 + startDate.getDay() + 1) / 7);
             };
 
-            // Fill the rest of the year with blanks.
+            // Fill the rest of the calendar with blanks.
             // Also initialize month labels.
             const monthLabels = [
                 {
@@ -44,8 +44,16 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                     label: start.format("MMM"),
                 },
             ];
-            for (let i = 1; i < 180; i++) {
+            const maxDays = 190; // arbitrary choice for now.
+            for (let i = 1; i < maxDays; i++) {
                 const day = start.add(i, "day");
+
+                // Bail out if we're near the end and it's a Sunday.
+                // (Makes a clean right edge of the calendar.)
+                if ((i + 7) > maxDays && day.day() === 0){
+                    break;
+                }
+
                 dateCounts[day.format("YYYY-MM-DD")] ||= 0;
 
                 // If we crossed into a new month, save the month label:
@@ -91,7 +99,8 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                     Plot.cell(plotData, {
                         x: (d) => d.weekNumber,
                         y: (d) => d.dayOfWeek,
-                        fy: (d) => d.date.getFullYear(),
+                        // I'm mid-year now. Revisit this if I wind up crossing a calendar year boundary:
+                        // fy: (d) => d.date.getFullYear(),
                         fill: (d) => (d.count > 0 ? d.count * 2 + 1 : -2), // boost a bit, so 1's aren't too light.
                         title: (d) => (d.displayDate ? `${d.displayDate} (${d.count})` : "-"),
                         inset: 1,
