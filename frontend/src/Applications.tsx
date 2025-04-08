@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import { Application, ApplicationFilter, getApplications, saveApplications, newApplication } from "./api/Application";
 
 import ApplicationList from "./components/ApplicationList";
-import NavBreadcrumbs from "./components/NavBreadcrumbs";
+import TopNav from "./components/TopNav";
 
 function Screen() {
     const [applications, setApplications] = useState<Application[]>([]);
@@ -98,7 +98,7 @@ function Screen() {
 
     return (
         <div>
-            <NavBreadcrumbs currentItemLabel="Applications" />
+            <TopNav currentItemLabel="Applications" />
             <Container className="mt-4">
                 <Row>
                     <Col>

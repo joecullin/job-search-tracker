@@ -1,21 +1,23 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import TopNav from "./components/TopNav";
 
 function Screen() {
     return (
         <div>
-            <h1 className="text-center mt-4">Job Search Tools</h1>
+            <TopNav currentItemLabel="Home" />
             <Container className="mt-4">
                 <Row>
                     <Col>
-                        <Button variant="link" href="/applications">
-                            Applications
-                        </Button>
-                        <Button variant="link" href="/analysis">
-                            Analysis &amp; Visuals
-                        </Button>
+                        <p>
+                            Job search tools
+                        </p>
+                        <p>
+                            See <a href="https://github.com/joecullin/job-search-tracker" target="_blank">
+                                github/joecullin/job-search-tracker
+                            </a>.
+                        </p>
                     </Col>
                 </Row>
             </Container>

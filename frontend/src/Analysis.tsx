@@ -7,7 +7,7 @@ import { Application, getApplications } from "./api/Application";
 import ApplicationCalendar from "./components/analytics/ApplicationCalendar";
 import ApplicationsVsRejectionsTimeline from "./components/analytics/ApplicationsVsRejectionsTimeline";
 
-import NavBreadcrumbs from "./components/NavBreadcrumbs";
+import TopNav from "./components/TopNav";
 
 function Screen() {
     const [applications, setApplications] = useState<Application[]>([]);
@@ -23,7 +23,7 @@ function Screen() {
 
     return (
         <div>
-            <NavBreadcrumbs currentItemLabel="Analysis" />
+            <TopNav currentItemLabel="Analysis" />
             <Container className="mt-4">
                 <Row>
                     <Col xs={12}>
