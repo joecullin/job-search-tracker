@@ -9,14 +9,9 @@ interface ComponentProps {
     applications: Application[];
 }
 
-// Note:
-// - I didn't think through boundaries or local vs UTC much.
-//   - Hopefully I won't still be job hunting in December–January,
-//   - For this kind of graphical view, I'm not worried about timezones being off by one day.
-
-//TODO:
-// - make the boxes square instead of rectangle?
-// - rounded corners on boxes?
+// Notes about some shortcuts I took:
+// - As in the rest of the app, I'm a little careless here with UTC vs local dates.
+// - Hardcoded couple hundred day limit for now.
 
 const ApplicationTimeline = ({ applications }: ComponentProps) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -35,26 +30,26 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                 dateCounts[date]++;
             });
 
-            const jan1 = dayjs().startOf("year");
-            const jan1Date = jan1.toDate();
+            const start = dayjs(dateList[0]).subtract(2, "weeks").startOf("month");
+            const startDate = start.toDate();
             const getWeekNumber = (date: Date) => {
-                return Math.ceil(((date.getTime() - jan1Date.getTime()) / 86400000 + jan1Date.getDay() + 1) / 7);
+                return Math.ceil(((date.getTime() - startDate.getTime()) / 86400000 + startDate.getDay() + 1) / 7);
             };
 
             // Fill the rest of the year with blanks.
             // Also initialize month labels.
             const monthLabels = [
                 {
-                    weekNumber: getWeekNumber(jan1Date),
-                    label: jan1.format("MMM"),
+                    weekNumber: getWeekNumber(startDate),
+                    label: start.format("MMM"),
                 },
             ];
-            for (let i = 1; i < 364; i++) {
-                const day = jan1.add(i, "day");
+            for (let i = 1; i < 180; i++) {
+                const day = start.add(i, "day");
                 dateCounts[day.format("YYYY-MM-DD")] ||= 0;
 
                 // If we crossed into a new month, save the month label:
-                const yesterday = jan1.add(i - 1, "day");
+                const yesterday = start.add(i - 1, "day");
                 if (day.get("month") !== yesterday.get("month")) {
                     monthLabels.push({
                         weekNumber: getWeekNumber(day.toDate()),
@@ -88,7 +83,7 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                 },
                 fy: { tickFormat: "" },
                 color: {
-                    scheme: "PiYG",
+                    scheme: "BrBG",
                     tickFormat: "",
                     pivot: 0,
                 },
@@ -97,10 +92,19 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
                         x: (d) => d.weekNumber,
                         y: (d) => d.dayOfWeek,
                         fy: (d) => d.date.getFullYear(),
-                        fill: (d) => (d.count > 0 ? d.count + 3 : 0), // boost a bit, so 1's aren't too light.
-                        title: (d) => (d.displayDate ? `${d.displayDate}: ${d.count} applications` : "-"),
-                        inset: 0.5,
+                        fill: (d) => (d.count > 0 ? d.count * 2 + 1 : -2), // boost a bit, so 1's aren't too light.
+                        title: (d) => (d.displayDate ? `${d.displayDate} (${d.count})` : "-"),
+                        inset: 1,
+                        r: 3,
                     }),
+
+                    // Display count inside each cell. Can't decide whether to keep this.
+                    // Plot.text(plotData, {
+                    //     x: (d) => d.weekNumber,
+                    //     y: (d) => d.dayOfWeek,
+                    //     text: (d) => d.count > 0 ? d.count : "",
+                    //     fill: "white",
+                    // }),
 
                     Plot.text(monthLabels, {
                         text: (d) => d.label,
