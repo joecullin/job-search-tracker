@@ -11,6 +11,7 @@ export type ApplicationStatusId =
     | "unresponsive"
     | "applicationIgnored"
     | "applicationRejected"
+    | "rejected"
     | "declinedOffer"
     | "acceptedOffer"
     | "withdrew";
@@ -30,6 +31,7 @@ export const ApplicationStatusDefs = [
     { id: <ApplicationStatusId>"unresponsive", label: "stopped responding", active: false },
     { id: <ApplicationStatusId>"applicationIgnored", label: "application ignored", active: false },
     { id: <ApplicationStatusId>"applicationRejected", label: "application rejected", active: false },
+    { id: <ApplicationStatusId>"rejected", label: "rejected", active: false },
     { id: <ApplicationStatusId>"declinedOffer", label: "declined offer", active: false },
     { id: <ApplicationStatusId>"acceptedOffer", label: "accepted offer", active: false },
     { id: <ApplicationStatusId>"withdrew", label: "withdrew myself", active: false },

@@ -31,7 +31,8 @@ const ApplicationsVsRejectionsTimeline = ({ applications }: ComponentProps) => {
 
     useEffect(() => {
         if (containerRef?.current) {
-            const rejectionStatuses: ApplicationStatusId[] = ["applicationRejected"];
+            // Should move this info into the common/Applications file.
+            const rejectionStatuses: ApplicationStatusId[] = ["applicationRejected", "rejected"];
 
             type statsForDate = {
                 [key in string]?: {
