@@ -21,9 +21,9 @@ I might eventually share these by deploying them publicly with demo data, but fo
 
 ![screenshot of application list](/sample_data/applications.png)
 
-## Some things I'm learning/exploring/reinforcing/etc:
+## Some things I'm learning/exploring/reinforcing so far:
 
 - [Vite](https://vite.dev/) instead of [Webpack](https://webpack.js.org/)
 - Forcing myself to use [Typescript](https://www.typescriptlang.org/) more.
-- [Plot](https://observablehq.com/plot/) and [D3](https://d3js.org/) for visualizations.
+- Visualizations with [Plot](https://observablehq.com/plot/) and [D3](https://d3js.org/) instead of [Chart.js](https://www.chartjs.org/).
 - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) instead of [axios](https://www.npmjs.com/package/axios).
