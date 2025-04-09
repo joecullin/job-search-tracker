@@ -15,6 +15,6 @@ I might eventually share these by deploying them publicly with demo data, but fo
 
 Some screenshots:
 
-![screenshot of analysis charts](/sample_data/analysis.json)
+![screenshot of analysis charts](/sample_data/analysis.png)
 
-![screenshot of application list](/sample_data/applications.json)
+![screenshot of application list](/sample_data/applications.png)
