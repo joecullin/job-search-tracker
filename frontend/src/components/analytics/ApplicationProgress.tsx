@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as Plot from "@observablehq/plot";
 import dayjs from "dayjs";
-import { Application, ApplicationStatusId } from "../../api/Application";
+import { Application, ApplicationStatusId, applicationStatusIsActive } from "../../api/Application";
 
 interface ComponentProps {
     applications: Application[];
@@ -22,16 +22,13 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
             };
 
             const plotData = applications.map((application, i) => {
+                const mostRecentLogEntry = application.statusLog[application.statusLog.length - 1];
+                const stillActive = applicationStatusIsActive(mostRecentLogEntry.status);
+
                 const appData: plotDataEntry = {
                     applicationNumber: i + 1,
                     companyName: application.companyName,
-                    endDays:
-                        application.statusLog.length > 1
-                            ? dayjs(application.statusLog[application.statusLog.length - 1].timestamp).diff(
-                                  overallStartDate,
-                                  "days",
-                              )
-                            : overallDays,
+                    endDays: stillActive ? overallDays : dayjs(mostRecentLogEntry.timestamp).diff(overallStartDate, "days"),
                 };
                 application.statusLog.forEach((logEntry) => {
                     appData[logEntry.status] = dayjs(logEntry.timestamp).diff(overallStartDate, "days");
@@ -57,12 +54,14 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                     }
                 }
 
-                // If rejected in less than a day, add half a day,
-                // so the rejection dot doesn't cover the application dot.
-                // TODO: I should generalize that for all statuses. Happens the most for rejections though.
-                if (appData["rejected"] === appData["applied"]) {
+                // TODO: generalize this for all statuses. Only covering the couple most common so far.
+                // If rejected in less than a day, add half a day, so the rejection doesn't obscure the application.
+                if (appData["rejected"] && appData["rejected"] === appData["applied"]) {
                     const appliedDays = appData["applied"] as number;
                     appData["rejected"] = appData["endDays"] = appliedDays + 0.5;
+                } else if (appData["withdrew"] && appData["withdrew"] === appData["initialScreen"]) {
+                    const screenDays = appData["initialScreen"] as number;
+                    appData["endDays"] = appData["withdrew"] = screenDays + 0.5;
                 }
                 return appData;
             });
@@ -78,6 +77,7 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                 x: {
                     label: "days",
                     grid: true,
+                    tickSize: 0,
                 },
                 color: { scheme: "Category10" },
                 height: 500, //TODO revisit this. hardcoded for now.
@@ -97,8 +97,14 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                     Plot.dot(plotData, { x: "offer", y: "applicationNumber", r: 4, fill: "#008236" }),
                     //TODO: account for other statuses. Something fun like icon or emoji for offers? Or just bigger?
                     Plot.dot(plotData, { x: "rejected", y: "applicationNumber", r: 4, fill: "red" }),
+                    Plot.dot(plotData, { x: "withdrew", y: "applicationNumber", r: 4, fill: "red" }),
+                    Plot.dot(plotData, { x: "unresponsive", y: "applicationNumber", r: 4, fill: "gray" }),
+
+                    //TODO: add a legend?
                 ],
             });
+
+            plot.style.border = "1px solid lightgray";
 
             containerRef.current.append(plot);
             // Clean up before unmount

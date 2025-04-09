@@ -65,6 +65,11 @@ export const applicationStatusLabel = (statusId: ApplicationStatusId): string =>
     return statusProperties?.label ?? statusId;
 };
 
+export const applicationStatusIsActive = (statusId: ApplicationStatusId): boolean => {
+    const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
+    return statusProperties?.active ?? false;
+};
+
 export type Application = {
     id: string;
     companyName: string;
