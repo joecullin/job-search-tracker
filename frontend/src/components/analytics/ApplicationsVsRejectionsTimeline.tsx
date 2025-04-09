@@ -82,7 +82,7 @@ const ApplicationsVsRejectionsTimeline = ({ applications }: ComponentProps) => {
                 y: { grid: true },
                 grid: true,
                 width: width,
-                height: Math.ceil(width / 6),
+                height: Math.ceil(width / 3),
                 color: { scheme: "Category10" },
                 marks: [
                     Plot.ruleY([0]),
