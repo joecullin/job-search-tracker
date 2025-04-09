@@ -2,7 +2,12 @@ import { useEffect, useRef } from "react";
 
 import * as Plot from "@observablehq/plot";
 import dayjs from "dayjs";
-
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(customParseFormat);
 import { Application } from "../../api/Application";
 
 interface ComponentProps {
@@ -67,7 +72,8 @@ const ApplicationTimeline = ({ applications }: ComponentProps) => {
             }
 
             const plotData = Object.keys(dateCounts).map((dateString) => {
-                const date = new Date(dateString);
+                // With this chart more than the others, the UTC dates were distracting me. Hardcoded my own tz for now.
+                const date = dayjs.tz(dateString, "YYYY-MM-DD", "America/New_York").toDate();
                 const weekNumber = getWeekNumber(date);
                 return {
                     displayDate: dayjs(date).format("MMM D"),
