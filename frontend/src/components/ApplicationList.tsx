@@ -49,7 +49,16 @@ export default function ApplicationList({
                         if (firstContact !== 0) {
                             return firstContact;
                         }
-                        // maybe sub-sort by status timestamp here?
+                        // sub-sort by status timestamp
+                        const statusB = b.statusLog[0]?.timestamp;
+                        const statusA = a.statusLog[0]?.timestamp;
+                        if (statusA && statusB) {
+                            return statusB.localeCompare(statusA);
+                        } else if (statusA) {
+                            return 1;
+                        } else if (statusB) {
+                            return -1;
+                        }
                         return 0;
                     })
                     .map((application) => (
