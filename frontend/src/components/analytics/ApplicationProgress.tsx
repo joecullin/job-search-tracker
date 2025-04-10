@@ -45,9 +45,6 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                 }
 
                 // merge all interview statuses into just "interview"
-                if (appData["interview1"]) {
-                    appData["interview"] = appData["interview1"];
-                }
                 for (const interviewStatus of ["interview1", "interview2", "interview3", "interview4", "interview5"]) {
                     if (appData[interviewStatus as ApplicationStatusId]) {
                         appData["interview"] = appData[interviewStatus as ApplicationStatusId];
@@ -66,8 +63,6 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                 return appData;
             });
 
-            // console.log(`plotData: ${JSON.stringify(plotData, null, 2)}`); //JOE
-
             const plot = Plot.plot({
                 y: {
                     label: "applications",
@@ -79,11 +74,8 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                     grid: true,
                     tickSize: 0,
                 },
-                color: { scheme: "Category10" },
                 height: 500, //TODO revisit this. hardcoded for now.
                 marks: [
-                    // Plot.tickY([0,applications.length+1]),
-                    // Plot.tickX([0,overallDays]),
                     Plot.ruleY(plotData, {
                         x1: "applied",
                         x2: "endDays",
@@ -91,18 +83,41 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                         strokeOpacity: 0.5,
                         strokeWidth: 2,
                     }),
+
                     Plot.dot(plotData, { x: "applied", y: "applicationNumber", title: "companyName", r: 4, fill: "gray" }),
-                    Plot.dot(plotData, { x: "initialScreen", y: "applicationNumber", r: 4, fill: "#007595" }),
-                    Plot.dot(plotData, { x: "interview", y: "applicationNumber", r: 4, fill: "#00c950" }),
-                    Plot.dot(plotData, { x: "offer", y: "applicationNumber", r: 4, fill: "#008236" }),
-                    //TODO: account for other statuses. Something fun like icon or emoji for offers? Or just bigger?
+                    Plot.dot(plotData, { x: "initialScreen", y: "applicationNumber", r: 4, fill: "#00b8db" }), // cyan 500
+                    Plot.dot(plotData, { x: "interview", y: "applicationNumber", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { x: "offered", y: "applicationNumber", r: 6, fill: "#008236" }), // green 700, bigger
+                    Plot.text(plotData, { x: "acceptedOffer", y: "applicationNumber", fontSize: 20, text: () => "🎉" }),
                     Plot.dot(plotData, { x: "rejected", y: "applicationNumber", r: 4, fill: "red" }),
                     Plot.dot(plotData, { x: "withdrew", y: "applicationNumber", r: 4, fill: "red" }),
+                    Plot.dot(plotData, { x: "declinedOffer", y: "applicationNumber", r: 4, fill: "red" }),
                     Plot.dot(plotData, { x: "unresponsive", y: "applicationNumber", r: 4, fill: "gray" }),
-
-                    //TODO: add a legend?
+                    Plot.dot(plotData, { x: "applicationIgnored", y: "applicationNumber", r: 4, fill: "gray" }),
                 ],
             });
+
+            // Gave up (for now) on creating a custom legend with Plot. Use basic jsx below instead.
+            // const legendData = [
+            //     { x: 1, y: 0, color: "#00b8db", text: "screen" },
+            //     { x: 2, y: 0, color: "#00c950", text: "interview" },
+            //     { x: 3, y: 0, color: "#008236", text: "offer" },
+            // ];
+            // const legend = Plot.plot({
+            //     height: 50,
+            //     x: {
+            //         label: null,
+            //         tickPadding: 6,
+            //         tickSize: 0,
+            //         // domain: [0, 0.1, 1, 1.1, 2, 2.1],
+            //         type: "linear",
+            //         range: [0,500],
+            //     },
+            //     marks: [
+            //         Plot.dot(legendData, { x: (d) => d.x, y: () => 0, r: 4, fill: (d) => d.color }),
+            //         Plot.text(legendData, { x: (d) => d.x+.1, y: () => 0, text: (d) => d.text }),
+            //     ],
+            // });
 
             plot.style.border = "1px solid lightgray";
 
@@ -112,7 +127,17 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
         }
     }, [applications]);
 
-    return <div ref={containerRef} />;
+    return (
+        <div>
+            <div ref={containerRef} />
+            <div style={{ fontSize: ".6rem", paddingTop: 5 }}>
+                <span style={{ color: "red", paddingLeft: "1rem" }}>⬤</span> rejected, unresponsive, withdrew
+                <span style={{ color: "#00b8db", paddingLeft: "1rem" }}>⬤</span> screen
+                <span style={{ color: "#00c950", paddingLeft: "1rem" }}>⬤</span> interview
+                <span style={{ color: "#008236", paddingLeft: "1rem" }}>⬤</span> offer
+            </div>
+        </div>
+    );
 };
 
 export default ApplicationProgress;
