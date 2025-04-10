@@ -11,6 +11,7 @@ interface ApplicationListProps {
     focusApplication: (applicationId: string, focused: boolean) => void;
     editingApplication: (applicationId: string, focused: boolean) => void;
     saveChanges: (applicationId: string, application: Application) => void;
+    deleteApplication: (applicationId: string) => void;
     filters: ApplicationFilter[];
 }
 
@@ -21,6 +22,7 @@ export default function ApplicationList({
     focusApplication,
     editingApplication,
     saveChanges,
+    deleteApplication,
     filters,
 }: ApplicationListProps) {
     // When a card is focused, make it twice as wide.
@@ -71,6 +73,7 @@ export default function ApplicationList({
                                 focusApplication={focusApplication}
                                 editingApplication={editingApplication}
                                 saveChanges={saveChanges}
+                                deleteApplication={deleteApplication}
                             />
                         </Col>
                     ))}

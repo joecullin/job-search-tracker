@@ -7,6 +7,7 @@ import { Application, getApplications } from "./api/Application";
 import ApplicationCalendar from "./components/analytics/ApplicationCalendar";
 import ApplicationsVsRejectionsTimeline from "./components/analytics/ApplicationsVsRejectionsTimeline";
 import ApplicationProgress from "./components/analytics/ApplicationProgress";
+import ApplicationFlow from "./components/analytics/ApplicationFlow";
 import TopNav from "./components/TopNav";
 
 function Screen() {
@@ -41,8 +42,14 @@ function Screen() {
                         </Row>
                     </Col>
                     <Col xs={6}>
-                        <b>Application progress</b>
+                        <b>Progress</b>
                         {applications && <ApplicationProgress applications={applications} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <b>Flow</b>
+                        {applications && <ApplicationFlow applications={applications} />}
                     </Col>
                 </Row>
             </Container>

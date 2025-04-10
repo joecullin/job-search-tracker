@@ -20,8 +20,7 @@ function Screen() {
 
     const focusApplication = (applicationId: string, focused: boolean) => {
         const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
-        const isEditing = editingApplications.includes(applicationId);
-        if (focused || isEditing) {
+        if (focused) {
             focusedIds.push(applicationId);
         }
         setFocusedApplications(focusedIds);
@@ -65,8 +64,18 @@ function Screen() {
     const addApplication = () => {
         const application = newApplication();
         applications.push(application);
+        // Don't save to backend yet. We'll do that when user clicks "save."
         setApplications(applications);
         editingApplication(application.id, true);
+    };
+
+    const deleteApplication = (applicationId: string) => {
+        const remainingApplications = applications.filter((app) => app.id !== applicationId);
+        setApplications(remainingApplications);
+        // Save to backend.
+        saveApplications(remainingApplications);
+        // Reset edit mode.
+        editingApplication(applicationId, true);
     };
 
     const loadData = async () => {
@@ -173,6 +182,7 @@ function Screen() {
                             focusApplication={(applicationId, focused) => focusApplication(applicationId, focused)}
                             editingApplication={(applicationId, editing) => editingApplication(applicationId, editing)}
                             saveChanges={(applicationId, changes) => saveChanges(applicationId, changes)}
+                            deleteApplication={(applicationId) => deleteApplication(applicationId)}
                             filters={filters}
                         />
                     </Col>

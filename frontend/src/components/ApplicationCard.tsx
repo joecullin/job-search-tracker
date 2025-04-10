@@ -13,6 +13,7 @@ interface ApplicationDetailProps {
     focusApplication: (applicationId: string, focused: boolean) => void;
     editingApplication: (applicationId: string, editing: boolean) => void;
     saveChanges: (applicationId: string, application: Application) => void;
+    deleteApplication: (applicationId: string) => void;
 }
 
 export default function ApplicationCard({
@@ -22,6 +23,7 @@ export default function ApplicationCard({
     isFocused,
     focusApplication,
     editingApplication,
+    deleteApplication,
 }: ApplicationDetailProps) {
     const [draft, setDraft] = useState<Application | null>(application);
     const cardRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +51,7 @@ export default function ApplicationCard({
         <Card
             border={isEditing ? "primary" : isFocused ? "dark" : ""}
             className="applications-application-card"
-            onClick={() => focusApplication(application.id, !isFocused)}
+            onClick={() => !isEditing && focusApplication(application.id, !isFocused)}
             ref={cardRef}
         >
             <Card.Body>
@@ -172,24 +174,37 @@ export default function ApplicationCard({
                 {isEditing && (
                     <Fragment>
                         <Button
+                            variant="primary"
                             className="float-end"
-                            variant="link"
+                            style={{ margin: ".5rem" }}
                             onClick={(event) => {
                                 event.stopPropagation();
                                 saveChanges(application.id, draft);
                             }}
                         >
-                            save
+                            save changes
                         </Button>
                         <Button
+                            variant="secondary"
                             className="float-end"
-                            variant="link"
+                            style={{ margin: ".5rem" }}
                             onClick={(event) => {
                                 event.stopPropagation();
                                 editingApplication(application.id, false);
                             }}
                         >
                             cancel
+                        </Button>
+                        <Button
+                            variant="danger"
+                            className="float-end"
+                            style={{ margin: ".5rem" }}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                deleteApplication(application.id);
+                            }}
+                        >
+                            delete
                         </Button>
                     </Fragment>
                 )}
