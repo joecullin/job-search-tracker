@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
 import { Application, getApplications } from "./api/Application";
+import HighlightsRow from "./components/analytics/HighlightsRow";
 import ApplicationCalendar from "./components/analytics/ApplicationCalendar";
 import ApplicationsVsRejectionsTimeline from "./components/analytics/ApplicationsVsRejectionsTimeline";
 import ApplicationProgress from "./components/analytics/ApplicationProgress";
@@ -26,6 +27,7 @@ function Screen() {
         <div>
             <TopNav currentItemLabel="Analysis" />
             <Container className="mt-4">
+                <Row style={{ marginBottom: "1rem" }}>{applications && <HighlightsRow applications={applications} />}</Row>
                 <Row>
                     <Col xs={6}>
                         <Row>
