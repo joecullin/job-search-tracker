@@ -25,5 +25,5 @@ I might eventually share these by deploying them publicly with demo data, but fo
 
 - [Vite](https://vite.dev/) instead of [Webpack](https://webpack.js.org/)
 - Forcing myself to use [Typescript](https://www.typescriptlang.org/) more.
-- Visualizations with [Plot](https://observablehq.com/plot/) and [D3](https://d3js.org/) instead of [Chart.js](https://www.chartjs.org/).
+- Visualizations with [Plot](https://observablehq.com/plot/) and [ECharts](https://echarts.apache.org/) instead of [Chart.js](https://www.chartjs.org/).
 - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) instead of [axios](https://www.npmjs.com/package/axios).

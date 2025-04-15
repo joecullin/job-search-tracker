@@ -1,122 +1,142 @@
-import { useEffect, useRef } from "react";
-import * as Plot from "@observablehq/plot";
-import dayjs from "dayjs";
-import { Application, ApplicationStatusId, applicationStatusIsActive } from "../../api/Application";
+import ReactECharts from 'echarts-for-react';
+import { Application, ApplicationStatusId, ApplicationStatusDefs, applicationStatusLabel } from "../../api/Application";
 
 interface ComponentProps {
     applications: Application[];
 }
 
+// First draft of Sankey with ECharts.
+// So far, I'm impressed with the library but unimpressed by the docs & tutorials.
+// But it's clear enough that I've been able to learn from examples.
+// TODO:
+//  - dummy records to improve spacing?
+//  - explore levels: can I force "middle" statuses to middle, and only have "terminal" statuses on right?
+//  - colors
+//  - display counts?
+//  - show every company as a leaf node?
+//  - clean up (comments, console.logs, etc.)
+
 const ApplicationFlow = ({ applications }: ComponentProps) => {
-    const containerRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        if (containerRef?.current) {
-            applications.sort((a, b) => a.statusLog[0].timestamp.localeCompare(b.statusLog[0].timestamp));
-            const overallStartDate = dayjs(applications[0]?.firstContactDate);
-            const overallEndDate = dayjs();
-            const overallDays = overallEndDate.diff(overallStartDate, "days");
+    const getOption = () => {
+        // let links = [
+        //         // { source: 'dummy1', target: "dummy2", value: 0 },
+        //           {
+        //             source: "Applied (20)",
+        //             target: "Application rejected",
+        //             value: 5
+        //           },
+        //           {
+        //             source: "Applied (20)",
+        //             target: "Recruiter screen",
+        //             value: 3
+        //           },
+        //           {
+        //             source: "Recruiter outreach",
+        //             target: "Recruiter screen",
+        //             value: 1
+        //           },
+        //           {
+        //             source: "Recruiter screen",
+        //             target: "Application rejected",
+        //             value: 4
+        //           },
+        //           {
+        //             source: "Applied (20)",
+        //             target: "Application ignored",
+        //             value: 8
+        //           },
+        //         ];
 
-            type plotDataEntry = {
-                [key in "applicationNumber" | "companyName" | "endDays" | "interview" | ApplicationStatusId]?: number | string;
-            };
+        interface StatusTransition {
+            source: ApplicationStatusId,
+            target: ApplicationStatusId,
+            value: number,
+        };
+        const statusTransitions = [] as StatusTransition[];
 
-            const plotData = applications.map((application, i) => {
-                const mostRecentLogEntry = application.statusLog[application.statusLog.length - 1];
-                const stillActive = applicationStatusIsActive(mostRecentLogEntry.status);
-
-                const appData: plotDataEntry = {
-                    applicationNumber: i + 1,
-                    companyName: application.companyName,
-                    endDays: stillActive ? overallDays : dayjs(mostRecentLogEntry.timestamp).diff(overallStartDate, "days"),
-                };
-                application.statusLog.forEach((logEntry) => {
-                    appData[logEntry.status] = dayjs(logEntry.timestamp).diff(overallStartDate, "days");
-                });
-
-                // If there's no "applied" (e.g. if a recruiter reached out to me), treat first contact as applied date.
-                if (!application.statusLog.find((logEntry) => logEntry.status === "applied")) {
-                    appData["applied"] = dayjs(application.firstContactDate).diff(overallStartDate, "days");
+        applications.forEach(application => {
+            for (let i=0; i<application.statusLog.length; i++){
+                const status = application.statusLog[i].status;
+                let nextStatus: undefined | ApplicationStatusId;
+                if (application.statusLog.length === 1){
+                    nextStatus = undefined;
                 }
-
-                // merge a couple "rejected" statuses into just "rejected"
-                if (appData["applicationRejected"] && !appData["rejected"]) {
-                    appData["rejected"] = appData["applicationRejected"];
+                else if (i+1 < application.statusLog.length){
+                    nextStatus = application.statusLog[i+1].status;
                 }
-
-                // merge all interview statuses into just "interview"
-                for (const interviewStatus of ["interview1", "interview2", "interview3", "interview4", "interview5"]) {
-                    if (appData[interviewStatus as ApplicationStatusId]) {
-                        appData["interview"] = appData[interviewStatus as ApplicationStatusId];
+                if (nextStatus){
+                    const transitionIndex = statusTransitions.findIndex(transition => transition.source === status && transition.target === nextStatus);
+                    if (transitionIndex > -1){
+                        statusTransitions[transitionIndex].value++;
+                    }
+                    else{
+                        statusTransitions.push({
+                            source: status,
+                            target: nextStatus,
+                            value: 1,
+                        });
                     }
                 }
+            }
+        });
+        // console.log(`statusTransitions: ${JSON.stringify(statusTransitions, null, 2)}`);
 
-                // TODO: generalize this for all statuses. Only covering the couple most common so far.
-                // If rejected in less than a day, add half a day, so the rejection doesn't obscure the application.
-                if (appData["rejected"] && appData["rejected"] === appData["applied"]) {
-                    const appliedDays = appData["applied"] as number;
-                    appData["rejected"] = appData["endDays"] = appliedDays + 0.5;
-                } else if (appData["withdrew"] && appData["withdrew"] === appData["initialScreen"]) {
-                    const screenDays = appData["initialScreen"] as number;
-                    appData["endDays"] = appData["withdrew"] = screenDays + 0.5;
-                }
-                return appData;
-            });
+        const statusConfig = ApplicationStatusDefs.filter(statusDef => statusTransitions.some(transition => transition.source === statusDef.id || transition.target === statusDef.id))
+        .map(statusDef => {
+            return {
+                id: statusDef.id,
+            };
+        });
+        // console.log(`statusConfig: ${JSON.stringify(statusConfig, null, 2)}`);
 
-            const plot = Plot.plot({
-                y: {
-                    label: "applications",
-                    tickPadding: 6,
-                    tickSize: 0,
+        return {
+            series: {
+                type: 'sankey',
+                // layout: 'none',
+                layoutIterations: 32,
+                nodeGap: 24,
+                nodeWidth: 32,
+                emphasis: {
+                  focus: 'adjacency'
                 },
-                x: {
-                    label: "days",
-                    grid: true,
-                    tickSize: 0,
-                },
-                // height: 500, //TODO revisit this. hardcoded for now.
-                // width: 2000,
-                marks: [
-                    Plot.ruleY(plotData, {
-                        x1: "applied",
-                        x2: "endDays",
-                        y: "applicationNumber",
-                        strokeOpacity: 0.5,
-                        strokeWidth: 2,
-                    }),
+                data: statusConfig.map(config => {
+                    return {
+                        name: applicationStatusLabel(config.id),
+                    };
+                }),
+                // [
+                // // https://github.com/apache/echarts/issues/19375 has tip about these dummy points to reduce overlap
+                //   { name: 'dummy1', itemStyle: {color: 'transparent'}, label: {show: false} },
+                //   { name: 'dummy2', itemStyle: {color: 'transparent'}, label: {show: false} },
 
-                    Plot.dot(plotData, { x: "applied", y: "applicationNumber", title: "companyName", r: 4, fill: "gray" }),
-                    Plot.dot(plotData, { x: "initialScreen", y: "applicationNumber", r: 4, fill: "#00b8db" }), // cyan 500
-                    Plot.dot(plotData, { x: "interview", y: "applicationNumber", r: 4, fill: "#00c950" }), // green 500
-                    Plot.dot(plotData, { x: "offered", y: "applicationNumber", r: 6, fill: "#008236" }), // green 700, bigger
-                    Plot.text(plotData, { x: "acceptedOffer", y: "applicationNumber", fontSize: 20, text: () => "🎉" }),
-                    Plot.dot(plotData, { x: "rejected", y: "applicationNumber", r: 4, fill: "red" }),
-                    Plot.dot(plotData, { x: "withdrew", y: "applicationNumber", r: 4, fill: "red" }),
-                    Plot.dot(plotData, { x: "declinedOffer", y: "applicationNumber", r: 4, fill: "red" }),
-                    Plot.dot(plotData, { x: "unresponsive", y: "applicationNumber", r: 4, fill: "gray" }),
-                    Plot.dot(plotData, { x: "applicationIgnored", y: "applicationNumber", r: 4, fill: "gray" }),
-                ],
-            });
+                //   { name: "Recruiter outreach" },
+                //   { name: "Applied (20)" },
+                //   { name: "Recruiter screen" },
+                //   { name: "Application rejected" },
+                //   { name: "Application ignored" },
+                // ],
+                links: statusTransitions.map(transition => {
+                    return {
+                        ...transition,
+                        source: applicationStatusLabel(transition.source),
+                        target: applicationStatusLabel(transition.target),
+                    };
+                }),
+              }
+          };
+    };
 
-            plot.style.border = "1px solid lightgray";
-
-            containerRef.current.append(plot);
-            // Clean up before unmount
-            return () => plot.remove();
-        }
-    }, [applications]);
-
-    return (
-        <div>
-            <div ref={containerRef} />
-            <div style={{ fontSize: ".6rem", paddingTop: 5 }}>
-                <span style={{ color: "red", paddingLeft: "1rem" }}>⬤</span> rejected, unresponsive, withdrew
-                <span style={{ color: "#00b8db", paddingLeft: "1rem" }}>⬤</span> screen
-                <span style={{ color: "#00c950", paddingLeft: "1rem" }}>⬤</span> interview
-                <span style={{ color: "#008236", paddingLeft: "1rem" }}>⬤</span> offer
-            </div>
-        </div>
-    );
+    return <ReactECharts
+        style={{border: "solid 1px lightgray"}}
+        option={getOption()}
+        notMerge={true}
+        lazyUpdate={true}
+        opts={{
+            renderer: 'svg',
+            // height: 1000,
+        }}
+    />;
 };
 
 export default ApplicationFlow;
