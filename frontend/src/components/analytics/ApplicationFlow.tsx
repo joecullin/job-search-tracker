@@ -1,4 +1,4 @@
-import ReactECharts from 'echarts-for-react';
+import ReactECharts from "echarts-for-react";
 import { Application, ApplicationStatusId, ApplicationStatusDefs, applicationStatusLabel } from "../../api/Application";
 
 interface ComponentProps {
@@ -17,7 +17,6 @@ interface ComponentProps {
 //  - clean up (comments, console.logs, etc.)
 
 const ApplicationFlow = ({ applications }: ComponentProps) => {
-
     const getOption = () => {
         // let links = [
         //         // { source: 'dummy1', target: "dummy2", value: 0 },
@@ -49,28 +48,28 @@ const ApplicationFlow = ({ applications }: ComponentProps) => {
         //         ];
 
         interface StatusTransition {
-            source: ApplicationStatusId,
-            target: ApplicationStatusId,
-            value: number,
-        };
+            source: ApplicationStatusId;
+            target: ApplicationStatusId;
+            value: number;
+        }
         const statusTransitions = [] as StatusTransition[];
 
-        applications.forEach(application => {
-            for (let i=0; i<application.statusLog.length; i++){
+        applications.forEach((application) => {
+            for (let i = 0; i < application.statusLog.length; i++) {
                 const status = application.statusLog[i].status;
                 let nextStatus: undefined | ApplicationStatusId;
-                if (application.statusLog.length === 1){
+                if (application.statusLog.length === 1) {
                     nextStatus = undefined;
+                } else if (i + 1 < application.statusLog.length) {
+                    nextStatus = application.statusLog[i + 1].status;
                 }
-                else if (i+1 < application.statusLog.length){
-                    nextStatus = application.statusLog[i+1].status;
-                }
-                if (nextStatus){
-                    const transitionIndex = statusTransitions.findIndex(transition => transition.source === status && transition.target === nextStatus);
-                    if (transitionIndex > -1){
+                if (nextStatus) {
+                    const transitionIndex = statusTransitions.findIndex(
+                        (transition) => transition.source === status && transition.target === nextStatus,
+                    );
+                    if (transitionIndex > -1) {
                         statusTransitions[transitionIndex].value++;
-                    }
-                    else{
+                    } else {
                         statusTransitions.push({
                             source: status,
                             target: nextStatus,
@@ -82,8 +81,9 @@ const ApplicationFlow = ({ applications }: ComponentProps) => {
         });
         // console.log(`statusTransitions: ${JSON.stringify(statusTransitions, null, 2)}`);
 
-        const statusConfig = ApplicationStatusDefs.filter(statusDef => statusTransitions.some(transition => transition.source === statusDef.id || transition.target === statusDef.id))
-        .map(statusDef => {
+        const statusConfig = ApplicationStatusDefs.filter((statusDef) =>
+            statusTransitions.some((transition) => transition.source === statusDef.id || transition.target === statusDef.id),
+        ).map((statusDef) => {
             return {
                 id: statusDef.id,
             };
@@ -92,15 +92,15 @@ const ApplicationFlow = ({ applications }: ComponentProps) => {
 
         return {
             series: {
-                type: 'sankey',
+                type: "sankey",
                 // layout: 'none',
                 layoutIterations: 32,
                 nodeGap: 24,
                 nodeWidth: 32,
                 emphasis: {
-                  focus: 'adjacency'
+                    focus: "adjacency",
                 },
-                data: statusConfig.map(config => {
+                data: statusConfig.map((config) => {
                     return {
                         name: applicationStatusLabel(config.id),
                     };
@@ -116,27 +116,29 @@ const ApplicationFlow = ({ applications }: ComponentProps) => {
                 //   { name: "Application rejected" },
                 //   { name: "Application ignored" },
                 // ],
-                links: statusTransitions.map(transition => {
+                links: statusTransitions.map((transition) => {
                     return {
                         ...transition,
                         source: applicationStatusLabel(transition.source),
                         target: applicationStatusLabel(transition.target),
                     };
                 }),
-              }
-          };
+            },
+        };
     };
 
-    return <ReactECharts
-        style={{border: "solid 1px lightgray"}}
-        option={getOption()}
-        notMerge={true}
-        lazyUpdate={true}
-        opts={{
-            renderer: 'svg',
-            // height: 1000,
-        }}
-    />;
+    return (
+        <ReactECharts
+            style={{ border: "solid 1px lightgray" }}
+            option={getOption()}
+            notMerge={true}
+            lazyUpdate={true}
+            opts={{
+                renderer: "svg",
+                // height: 1000,
+            }}
+        />
+    );
 };
 
 export default ApplicationFlow;
