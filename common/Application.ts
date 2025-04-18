@@ -60,7 +60,7 @@ export const applicationStatusColor = (statusId: ApplicationStatusId): string =>
     return "#0084d1";
 };
 
-export const applicationStatusLabel = (statusId: ApplicationStatusId): string => {
+export const applicationStatusLabel = (statusId: ApplicationStatusId | string): string => {
     const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
     return statusProperties?.label ?? statusId;
 };
@@ -68,6 +68,11 @@ export const applicationStatusLabel = (statusId: ApplicationStatusId): string =>
 export const applicationStatusIsActive = (statusId: ApplicationStatusId): boolean => {
     const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
     return statusProperties?.active ?? false;
+};
+
+export const applicationStatusIsProgresssing = (statusId: ApplicationStatusId): boolean => {
+    const statusProperties = ApplicationStatusDefs.find((statusDef) => statusId === statusDef.id);
+    return statusProperties?.progressing ?? false;
 };
 
 export type Application = {

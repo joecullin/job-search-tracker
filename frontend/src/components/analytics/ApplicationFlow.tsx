@@ -1,5 +1,13 @@
 import ReactECharts from "echarts-for-react";
-import { Application, ApplicationStatusId, ApplicationStatusDefs, applicationStatusLabel } from "../../api/Application";
+import {
+    Application,
+    ApplicationStatusId,
+    ApplicationStatusDefs,
+    applicationStatusLabel,
+    applicationStatusColor,
+    applicationStatusIsActive,
+    applicationStatusIsProgresssing,
+} from "../../api/Application";
 
 interface ComponentProps {
     applications: Application[];
@@ -18,43 +26,38 @@ interface ComponentProps {
 
 const ApplicationFlow = ({ applications }: ComponentProps) => {
     const getOption = () => {
-        // let links = [
-        //         // { source: 'dummy1', target: "dummy2", value: 0 },
-        //           {
-        //             source: "Applied (20)",
-        //             target: "Application rejected",
-        //             value: 5
-        //           },
-        //           {
-        //             source: "Applied (20)",
-        //             target: "Recruiter screen",
-        //             value: 3
-        //           },
-        //           {
-        //             source: "Recruiter outreach",
-        //             target: "Recruiter screen",
-        //             value: 1
-        //           },
-        //           {
-        //             source: "Recruiter screen",
-        //             target: "Application rejected",
-        //             value: 4
-        //           },
-        //           {
-        //             source: "Applied (20)",
-        //             target: "Application ignored",
-        //             value: 8
-        //           },
-        //         ];
-
         interface StatusTransition {
-            source: ApplicationStatusId;
-            target: ApplicationStatusId;
+            source: ApplicationStatusId | string;
+            target: ApplicationStatusId | string;
             value: number;
         }
         const statusTransitions = [] as StatusTransition[];
 
+        const fakeExtraStatuses = new Set<string>();
         applications.forEach((application) => {
+            // Unique leaf node for every application. Interesting, but too packed.
+            // fakeExtraStatuses.add(application.companyName);
+            // statusTransitions.push({
+            //     source: application.companyName,
+            //     target: application.statusLog[0].status,
+            //     value: 1,
+            // });
+
+            const countTransition = (source: ApplicationStatusId | string, target: ApplicationStatusId | string) => {
+                const transitionIndex = statusTransitions.findIndex(
+                    (transition) => transition.source === source && transition.target === target,
+                );
+                if (transitionIndex > -1) {
+                    statusTransitions[transitionIndex].value++;
+                } else {
+                    statusTransitions.push({
+                        source,
+                        target,
+                        value: 1,
+                    });
+                }
+            };
+
             for (let i = 0; i < application.statusLog.length; i++) {
                 const status = application.statusLog[i].status;
                 let nextStatus: undefined | ApplicationStatusId;
@@ -64,78 +67,128 @@ const ApplicationFlow = ({ applications }: ComponentProps) => {
                     nextStatus = application.statusLog[i + 1].status;
                 }
                 if (nextStatus) {
-                    const transitionIndex = statusTransitions.findIndex(
-                        (transition) => transition.source === status && transition.target === nextStatus,
-                    );
-                    if (transitionIndex > -1) {
-                        statusTransitions[transitionIndex].value++;
-                    } else {
-                        statusTransitions.push({
-                            source: status,
-                            target: nextStatus,
-                            value: 1,
-                        });
+                    countTransition(status, nextStatus);
+                } else {
+                    // no nextStatus
+                    let fakeNextStatus: string | undefined;
+                    if (applicationStatusIsProgresssing(status)) {
+                        fakeNextStatus = "progressing";
+                    } else if (applicationStatusIsActive(status)) {
+                        fakeNextStatus = "no response yet";
+                    }
+                    if (fakeNextStatus) {
+                        fakeExtraStatuses.add(fakeNextStatus);
+                        countTransition(status, fakeNextStatus);
                     }
                 }
             }
         });
         // console.log(`statusTransitions: ${JSON.stringify(statusTransitions, null, 2)}`);
 
-        const statusConfig = ApplicationStatusDefs.filter((statusDef) =>
+        interface StatusConfig {
+            id: ApplicationStatusId | undefined;
+            label: string;
+            color: string;
+        }
+
+        const statusConfig: StatusConfig[] = ApplicationStatusDefs.filter((statusDef) =>
             statusTransitions.some((transition) => transition.source === statusDef.id || transition.target === statusDef.id),
         ).map((statusDef) => {
             return {
                 id: statusDef.id,
+                label: applicationStatusLabel(statusDef.id),
+                color: applicationStatusColor(statusDef.id),
             };
         });
+        if (fakeExtraStatuses.size) {
+            [...fakeExtraStatuses].forEach((fakeStatus) => {
+                statusConfig.push({
+                    id: "offered",
+                    label: fakeStatus,
+                    color: "#fe9a00", // amber 500
+                });
+            });
+        }
         // console.log(`statusConfig: ${JSON.stringify(statusConfig, null, 2)}`);
 
         return {
+            tooltip: {
+                trigger: "item",
+                triggerOn: "mousemove",
+            },
             series: {
                 type: "sankey",
-                // layout: 'none',
-                layoutIterations: 32,
-                nodeGap: 24,
-                nodeWidth: 32,
-                emphasis: {
-                    focus: "adjacency",
+                layoutIterations: 100,
+                nodeGap: 8,
+                lineStyle: {
+                    color: "gradient",
+                    curveness: 0.5,
                 },
-                data: statusConfig.map((config) => {
-                    return {
-                        name: applicationStatusLabel(config.id),
-                    };
-                }),
-                // [
-                // // https://github.com/apache/echarts/issues/19375 has tip about these dummy points to reduce overlap
-                //   { name: 'dummy1', itemStyle: {color: 'transparent'}, label: {show: false} },
-                //   { name: 'dummy2', itemStyle: {color: 'transparent'}, label: {show: false} },
+                // Saving some options I played with:
+                // layout: 'none',
+                // lineStyle: { curveness: .8 },
+                // nodeWidth: 32,
+                // emphasis: { focus: "adjacency" },
 
-                //   { name: "Recruiter outreach" },
-                //   { name: "Applied (20)" },
-                //   { name: "Recruiter screen" },
-                //   { name: "Application rejected" },
-                //   { name: "Application ignored" },
-                // ],
-                links: statusTransitions.map((transition) => {
-                    return {
-                        ...transition,
-                        source: applicationStatusLabel(transition.source),
-                        target: applicationStatusLabel(transition.target),
-                    };
-                }),
+                data: [
+                    statusConfig
+                        // TODO (maybe): custom sort statusConfig (like below) to minimize overlap?
+                        //  - I liked this slightly better, but I don't want to hardcode this list of transitions.
+                        //  - If I do that, remember to also set layoutIterations to zero.
+                        // [
+                        //     { "id": "recruiterOutreach", "label": "recruiter outreach" },
+                        //     { "id": "applied", "label": "applied" },
+                        //     { "id": "interview3", "label": "interview #3" },
+                        //     { "id": "interview2", "label": "interview #2" },
+                        //     { "id": "interview1", "label": "interview #1" },
+                        //     { "id": "initialScreen", "label": "initial screen" },
+                        //     { "id": "offered", "label": "progressing" },
+                        //     { "id": "withdrew", "label": "withdrew myself" },
+                        //     { "id": "unresponsive", "label": "stopped responding" },
+                        //     { "id": "rejected", "label": "rejected" },
+                        //     { "id": "applicationRejected", "label": "application rejected" },
+                        //     { "id": "offered", "label": "no response yet" },
+                        //     { "id": "applicationIgnored", "label": "application ignored" },
+                        // ]
+                        .map((config) => {
+                            return {
+                                name: config.label,
+                                itemStyle: {
+                                    color: config.color,
+                                },
+                            };
+                        }),
+
+                    // https://github.com/apache/echarts/issues/19375 has tip to reduce overlap:
+                    // Add a few transparent dummy points. Also set a bigger nodegap (above).
+                    Array.from({ length: 2 }, (_, i) => {
+                        return { name: `dummy${i}`, itemStyle: { color: "transparent" }, label: { show: false } };
+                    }),
+                ].flat(),
+                links: [
+                    statusTransitions.map((transition) => {
+                        return {
+                            ...transition,
+                            source: applicationStatusLabel(transition.source),
+                            target: applicationStatusLabel(transition.target),
+                        };
+                    }),
+                ].flat(),
             },
         };
     };
 
     return (
         <ReactECharts
-            style={{ border: "solid 1px lightgray" }}
+            style={{
+                border: "solid 1px lightgray",
+                height: "500px",
+            }}
             option={getOption()}
             notMerge={true}
             lazyUpdate={true}
             opts={{
                 renderer: "svg",
-                // height: 1000,
             }}
         />
     );
