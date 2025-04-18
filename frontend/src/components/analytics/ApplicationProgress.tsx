@@ -18,7 +18,9 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
             const overallDays = overallEndDate.diff(overallStartDate, "days");
 
             type plotDataEntry = {
-                [key in "applicationNumber" | "companyName" | "endDays" | "interview" | ApplicationStatusId]?: number | string;
+                [key in "applicationNumber" | "companyName" | "endDays" | "interview" | "hoverText" | ApplicationStatusId]?:
+                    | number
+                    | string;
             };
 
             const plotData = applications.map((application, i) => {
@@ -60,9 +62,19 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                     const screenDays = appData["initialScreen"] as number;
                     appData["endDays"] = appData["withdrew"] = screenDays + 0.5;
                 }
+
+                appData.hoverText = [
+                    application.companyName,
+                    application.firstContactDate ? new Date(application.firstContactDate).toLocaleDateString() : "",
+                ].join(" - ");
+
                 return appData;
             });
 
+            const commonOptions = {
+                y: "applicationNumber",
+                title: "hoverText",
+            };
             const plot = Plot.plot({
                 y: {
                     label: "applications",
@@ -84,16 +96,16 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                         strokeWidth: 2,
                     }),
 
-                    Plot.dot(plotData, { x: "applied", y: "applicationNumber", title: "companyName", r: 4, fill: "gray" }),
-                    Plot.dot(plotData, { x: "initialScreen", y: "applicationNumber", r: 4, fill: "#00b8db" }), // cyan 500
-                    Plot.dot(plotData, { x: "interview", y: "applicationNumber", r: 4, fill: "#00c950" }), // green 500
-                    Plot.dot(plotData, { x: "offered", y: "applicationNumber", r: 6, fill: "#008236" }), // green 700, bigger
-                    Plot.text(plotData, { x: "acceptedOffer", y: "applicationNumber", fontSize: 20, text: () => "🎉" }),
-                    Plot.dot(plotData, { x: "rejected", y: "applicationNumber", r: 4, fill: "red" }),
-                    Plot.dot(plotData, { x: "withdrew", y: "applicationNumber", r: 4, fill: "red" }),
-                    Plot.dot(plotData, { x: "declinedOffer", y: "applicationNumber", r: 4, fill: "red" }),
-                    Plot.dot(plotData, { x: "unresponsive", y: "applicationNumber", r: 4, fill: "gray" }),
-                    Plot.dot(plotData, { x: "applicationIgnored", y: "applicationNumber", r: 4, fill: "gray" }),
+                    Plot.dot(plotData, { ...commonOptions, ...commonOptions, x: "applied", r: 4, fill: "gray" }),
+                    Plot.dot(plotData, { ...commonOptions, x: "initialScreen", r: 4, fill: "#00b8db" }), // cyan 500
+                    Plot.dot(plotData, { ...commonOptions, x: "interview", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { ...commonOptions, x: "offered", r: 6, fill: "#008236" }), // green 700, bigger
+                    Plot.text(plotData, { ...commonOptions, x: "acceptedOffer", fontSize: 20, text: () => "🎉" }),
+                    Plot.dot(plotData, { ...commonOptions, x: "rejected", r: 4, fill: "red" }),
+                    Plot.dot(plotData, { ...commonOptions, x: "withdrew", r: 4, fill: "red" }),
+                    Plot.dot(plotData, { ...commonOptions, x: "declinedOffer", r: 4, fill: "red" }),
+                    Plot.dot(plotData, { ...commonOptions, x: "unresponsive", r: 4, fill: "gray" }),
+                    Plot.dot(plotData, { ...commonOptions, x: "applicationIgnored", r: 4, fill: "gray" }),
                 ],
             });
 
