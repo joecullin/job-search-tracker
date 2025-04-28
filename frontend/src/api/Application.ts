@@ -21,7 +21,12 @@ export const getApplications = async (): Promise<Application[]> => {
     return [];
 };
 
-export const filterApplications = (applications: Application[], filters: ApplicationFilter[]): Application[] => {
+export const filterApplications = (
+    applications: Application[],
+    filters: ApplicationFilter[],
+    searchQuery?: string,
+): Application[] => {
+    let filtered = applications;
     if (filters.length) {
         type StatusMapping = {
             [key in ApplicationStatusId]?: {
@@ -36,7 +41,6 @@ export const filterApplications = (applications: Application[], filters: Applica
                 progressing: statusDef.progressing,
             };
         });
-        let filtered = applications;
         for (const filter of filters) {
             if (filter === "status:active") {
                 filtered = filtered.filter((app) => statusMappings[app.status]?.active);
@@ -46,10 +50,16 @@ export const filterApplications = (applications: Application[], filters: Applica
                 filtered = filtered.filter((app) => statusMappings[app.status]?.progressing);
             }
         }
-        return filtered;
-    } else {
-        return applications;
     }
+    if (searchQuery && searchQuery !== "") {
+        const searchString = searchQuery.toLowerCase();
+        filtered = filtered.filter((app) => {
+            const flattened = JSON.stringify(app).toLowerCase();
+            return flattened.includes(searchString);
+        });
+    }
+
+    return filtered;
 };
 
 export const saveApplications = async (applications: Application[]): Promise<void> => {

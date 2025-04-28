@@ -13,6 +13,7 @@ interface ApplicationListProps {
     saveChanges: (applicationId: string, application: Application) => void;
     deleteApplication: (applicationId: string) => void;
     filters: ApplicationFilter[];
+    searchQuery: string;
 }
 
 export default function ApplicationList({
@@ -24,6 +25,7 @@ export default function ApplicationList({
     saveChanges,
     deleteApplication,
     filters,
+    searchQuery,
 }: ApplicationListProps) {
     // When a card is focused, make it twice as wide.
     const cardWidth = (size: string, applicationId: string) => {
@@ -34,12 +36,12 @@ export default function ApplicationList({
         }
     };
 
-    const filteredApplications = filterApplications(applications, filters);
+    const filteredApplications = filterApplications(applications, filters, searchQuery);
     return (
         <Fragment>
             <Row>
                 <Col>
-                    {filters.length > 0
+                    {filters.length > 0 || searchQuery !== ""
                         ? `Filtered to ${filteredApplications.length} of ${applications.length} total applications.`
                         : `Showing all ${applications.length} applications.`}
                 </Col>

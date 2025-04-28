@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -17,6 +18,8 @@ function Screen() {
     const [focusedApplications, setFocusedApplications] = useState<string[]>([]);
     const [editingApplications, setEditingApplications] = useState<string[]>([]);
     const [filters, setFilters] = useState<ApplicationFilter[]>(["status:active"]);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const focusApplication = (applicationId: string, focused: boolean) => {
         const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
@@ -83,9 +86,19 @@ function Screen() {
         setApplications(allApplications);
     };
 
+    const handleSearchQueryChange = (queryText: string) => {
+        setSearchQuery(queryText); // update our own state
+        setSearchParams(queryText); // update the browser url
+    };
+
     useEffect(() => {
+        const searchQuery = searchParams.get("search") || "";
+        setSearchQuery(searchQuery);
+        if (searchQuery !== "") {
+            setFilters([]);
+        }
         loadData();
-    }, []);
+    }, [searchParams]);
 
     // Some rough counts for now, until I add a better stats view.
     const startOfToday = dayjs().startOf("date");
@@ -107,7 +120,11 @@ function Screen() {
 
     return (
         <div>
-            <TopNav currentItemLabel="Applications" />
+            <TopNav
+                currentItemLabel="Applications"
+                handleSearchQueryChange={(queryText) => handleSearchQueryChange(queryText)}
+                searchQuery={searchQuery}
+            />
             <Container className="mt-4">
                 <Row>
                     <Col>
@@ -166,6 +183,19 @@ function Screen() {
                                 </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
+                        {searchQuery && (
+                            <Button
+                                style={{ marginLeft: "1rem" }}
+                                variant="secondary"
+                                size="sm"
+                                onClick={() => {
+                                    handleSearchQueryChange("");
+                                }}
+                            >
+                                {searchQuery}
+                                &nbsp;&nbsp;&nbsp; x
+                            </Button>
+                        )}
                     </Col>
                     <Col>
                         <Button variant="primary" className="float-end" onClick={() => addApplication()}>
@@ -184,6 +214,7 @@ function Screen() {
                             saveChanges={(applicationId, changes) => saveChanges(applicationId, changes)}
                             deleteApplication={(applicationId) => deleteApplication(applicationId)}
                             filters={filters}
+                            searchQuery={searchQuery}
                         />
                     </Col>
                 </Row>
