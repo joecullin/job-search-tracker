@@ -9,8 +9,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 interface ComponentProps {
     currentItemLabel: string;
-    handleSearchQueryChange: (queryText: string) => void;
-    searchQuery: string;
+    handleSearchQueryChange?: (queryText: string) => void;
+    searchQuery?: string;
 }
 
 const TopNav = ({ currentItemLabel, handleSearchQueryChange, searchQuery }: ComponentProps) => {
