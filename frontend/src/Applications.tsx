@@ -6,17 +6,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import dayjs from "dayjs";
 
 import { Application, ApplicationFilter, getApplications, saveApplications, newApplication } from "./api/Application";
 
 import ApplicationList from "./components/ApplicationList";
+import CloseOldApplications from "./components/CloseOldApplications";
 import TopNav from "./components/TopNav";
 
 function Screen() {
     const [applications, setApplications] = useState<Application[]>([]);
     const [focusedApplications, setFocusedApplications] = useState<string[]>([]);
     const [editingApplications, setEditingApplications] = useState<string[]>([]);
+    const [closingOld, setClosingOld] = useState<boolean>(false);
     const [filters, setFilters] = useState<ApplicationFilter[]>(["status:active"]);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchParams, setSearchParams] = useSearchParams();
@@ -198,11 +201,30 @@ function Screen() {
                         )}
                     </Col>
                     <Col>
-                        <Button variant="primary" className="float-end" onClick={() => addApplication()}>
-                            New application
-                        </Button>
+                        <Dropdown as={ButtonGroup} className="float-end">
+                            <Button variant="primary" onClick={() => addApplication()}>
+                                New Application
+                            </Button>
+
+                            <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => setClosingOld(true)}>Close old applications</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Col>
                 </Row>
+                {closingOld && (
+                    <Row style={{ margin: "2rem" }}>
+                        <Col>
+                            <CloseOldApplications
+                                applications={applications}
+                                saveChanges={(applicationId, changes) => saveChanges(applicationId, changes)}
+                                cancel={() => setClosingOld(false)}
+                            />
+                        </Col>
+                    </Row>
+                )}
                 <Row>
                     <Col>
                         <ApplicationList
