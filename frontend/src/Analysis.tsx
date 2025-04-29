@@ -27,11 +27,11 @@ function Screen() {
         <div>
             <TopNav currentItemLabel="Analysis" />
             <Container className="mt-4">
-                <Row style={{ marginBottom: "1rem" }}>{applications && <HighlightsRow applications={applications} />}</Row>
                 <Row>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Row>
-                            <Col xs={12}>
+                            {applications && <HighlightsRow applications={applications} />}
+                            <Col xs={12} style={{ paddingTop: "1rem" }}>
                                 <b>Applications</b>
                                 {applications && <ApplicationCalendar applications={applications} />}
                             </Col>
@@ -43,7 +43,7 @@ function Screen() {
                             </Col>
                         </Row>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <b>Progress</b>
                         {applications && <ApplicationProgress applications={applications} />}
                     </Col>

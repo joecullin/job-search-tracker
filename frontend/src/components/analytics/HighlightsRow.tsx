@@ -20,7 +20,7 @@ const HighlightsRow = ({ applications }: ComponentProps) => {
 
     return (
         <Fragment>
-            <Col xs={6} sm={4} md={2} style={{ overflowX: "clip", whiteSpace: "nowrap" }}>
+            <Col xs={6} sm={4} style={{ overflowX: "clip", whiteSpace: "nowrap", paddingTop: "1.5rem" }}>
                 <Card>
                     <Card.Body style={{ fontSize: "1rem", fontWeight: "bold" }}>
                         <Card.Title style={{ color: "gray", fontSize: "1rem", fontWeight: "normal", margin: 0 }}>
@@ -30,7 +30,7 @@ const HighlightsRow = ({ applications }: ComponentProps) => {
                     </Card.Body>
                 </Card>
             </Col>
-            <Col xs={6} sm={4} md={2} style={{ overflowX: "clip", whiteSpace: "nowrap" }}>
+            <Col xs={6} sm={4} style={{ overflowX: "clip", whiteSpace: "nowrap", paddingTop: "1.5rem" }}>
                 <Card>
                     <Card.Body style={{ fontSize: "1rem", fontWeight: "bold" }}>
                         <Card.Title style={{ color: "gray", fontSize: "1rem", fontWeight: "normal", margin: 0 }}>
@@ -40,7 +40,7 @@ const HighlightsRow = ({ applications }: ComponentProps) => {
                     </Card.Body>
                 </Card>
             </Col>
-            <Col xs={6} sm={4} md={2} style={{ overflowX: "clip", whiteSpace: "nowrap" }}>
+            <Col xs={6} sm={4} style={{ overflowX: "clip", whiteSpace: "nowrap", paddingTop: "1.5rem" }}>
                 <Card>
                     <Card.Body style={{ fontSize: "1rem", fontWeight: "bold" }}>
                         <Card.Title style={{ color: "gray", fontSize: "1rem", fontWeight: "normal", margin: 0 }}>

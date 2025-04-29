@@ -86,7 +86,7 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                     grid: true,
                     tickSize: 0,
                 },
-                height: 500, //TODO revisit this. hardcoded for now.
+                height: 665, //TODO revisit this. hardcoded for now.
                 marks: [
                     Plot.ruleY(plotData, {
                         x1: "applied",
