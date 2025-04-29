@@ -49,9 +49,9 @@ jobs:
         uses: actions/configure-pages@v5
       - name: github pages SPA workaround
         working-directory: frontend/dist
-        run: mkdir Analysis && cp index.html Analysis/index.html
+        run: mkdir Analysis && cp index.html Analysis && mkdir Applications && cp index.html Applications
       - name: Dir check 2
-        run: ls -halt && ls -haltr dist
+        run: find . -type f
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
