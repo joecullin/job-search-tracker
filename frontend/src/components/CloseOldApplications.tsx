@@ -8,8 +8,7 @@ import Button from "react-bootstrap/Button";
 
 import dayjs from "dayjs";
 
-import { Application, filterApplications } from "../api/Application";
-import { applicationStatusLabel } from "../api/Application";
+import { Application, filterApplications, applicationStatusLabel, applicationStatusIsProgresssing } from "../api/Application";
 
 interface ApplicationFormProps {
     applications: Application[];
@@ -40,14 +39,15 @@ export default function CloseOldApplications({ applications, saveChanges, cancel
 
     const performChanges = () => {
         const applicationsToClose = matchingApplications();
-        console.log(`closing applications:`, applicationsToClose);
 
-        //JOE - stopped here.
-        //TODO:
-        // - Close each application. I'm planning to just call saveChanges() separately on each.
-        // - clear the reminder date, too.
-        // - Close this card. Use cancel()?
-        // - Status message (success or failure) might be nice.
+        applicationsToClose.forEach((application) => {
+            application.status = applicationStatusIsProgresssing(application.status) ? "unresponsive" : "applicationIgnored";
+            application.reminderDate = "";
+            saveChanges(application.id, application);
+        });
+
+        // close this card:
+        cancel();
     };
 
     return (
