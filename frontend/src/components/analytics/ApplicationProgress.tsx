@@ -18,9 +18,17 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
             const overallDays = overallEndDate.diff(overallStartDate, "days");
 
             type plotDataEntry = {
-                [key in "applicationNumber" | "companyName" | "endDays" | "interview" | "hoverText" | ApplicationStatusId]?:
-                    | number
-                    | string;
+                [key in
+                    | "applicationNumber"
+                    | "companyName"
+                    | "endDays"
+                    | "interview1"
+                    | "interview2"
+                    | "interview3"
+                    | "interview4"
+                    | "interview5"
+                    | "hoverText"
+                    | ApplicationStatusId]?: number | string;
             };
 
             const plotData = applications.map((application, i) => {
@@ -44,13 +52,6 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
                 // merge a couple "rejected" statuses into just "rejected"
                 if (appData["applicationRejected"] && !appData["rejected"]) {
                     appData["rejected"] = appData["applicationRejected"];
-                }
-
-                // merge all interview statuses into just "interview"
-                for (const interviewStatus of ["interview1", "interview2", "interview3", "interview4", "interview5"]) {
-                    if (appData[interviewStatus as ApplicationStatusId]) {
-                        appData["interview"] = appData[interviewStatus as ApplicationStatusId];
-                    }
                 }
 
                 // TODO: generalize this for all statuses. Only covering the couple most common so far.
@@ -98,7 +99,11 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
 
                     Plot.dot(plotData, { ...commonOptions, ...commonOptions, x: "applied", r: 4, fill: "gray" }),
                     Plot.dot(plotData, { ...commonOptions, x: "initialScreen", r: 4, fill: "#00b8db" }), // cyan 500
-                    Plot.dot(plotData, { ...commonOptions, x: "interview", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { ...commonOptions, x: "interview1", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { ...commonOptions, x: "interview2", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { ...commonOptions, x: "interview3", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { ...commonOptions, x: "interview4", r: 4, fill: "#00c950" }), // green 500
+                    Plot.dot(plotData, { ...commonOptions, x: "interview5", r: 4, fill: "#00c950" }), // green 500
                     Plot.dot(plotData, { ...commonOptions, x: "offered", r: 6, fill: "#008236" }), // green 700, bigger
                     Plot.text(plotData, { ...commonOptions, x: "acceptedOffer", fontSize: 20, text: () => "🎉" }),
                     Plot.dot(plotData, { ...commonOptions, x: "rejected", r: 4, fill: "red" }),
