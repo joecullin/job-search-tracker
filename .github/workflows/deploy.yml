@@ -48,7 +48,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: github pages SPA workaround
-        working-directory: ./frontent/dist
+        working-directory: frontend/dist
         run: mkdir Analysis && cp index.html Analysis/index.html
       - name: Dir check 2
         run: ls -halt && ls -haltr dist
