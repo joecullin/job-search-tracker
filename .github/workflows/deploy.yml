@@ -47,6 +47,8 @@ jobs:
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: github pages SPA workaround
+        run: chdir dist && mkdir Analysis && cp index.html Analysis/index.html
       - name: Dir check 2
         run: ls -halt && ls -haltr dist
       - name: Upload artifact
