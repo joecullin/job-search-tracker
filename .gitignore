@@ -146,11 +146,10 @@ node_modules
 *.swp
 *.swo
 .DS_Store
-package-lock.json
 yarn.lock
 logs/
 *.log*
 
 dist
-package-lock.json
+# package-lock.json
 data/
