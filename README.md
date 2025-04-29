@@ -45,4 +45,4 @@ export SERVER_PORT="3000"
 export LOCAL_FILESYSTEM_DATA_PATH="/Users/me/code/job-search-tracker/data"
 npm run dev
 ```
-Then visit http://localhost:5173/ in your browser.
+Then visit http://localhost:5173/job-search-tracker/ in your browser.
