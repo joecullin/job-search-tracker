@@ -32,6 +32,7 @@ I deployed to [github pages](https://joecullin.github.io/job-search-tracker/Anal
 - Visualizations with [Plot](https://observablehq.com/plot/) and [ECharts](https://echarts.apache.org/) instead of [Chart.js](https://www.chartjs.org/).
 - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) instead of [axios](https://www.npmjs.com/package/axios).
 - [GitHub Actions and Pages](https://docs.github.com/en/actions) instead of [GitLab CI/CD](https://docs.gitlab.com/ci/), Azure DevOps, Jenkins, etc.
+- [Zustand](https://www.npmjs.com/package/zustand) instead of [Redux](https://www.npmjs.com/package/redux).
 
 ## Install and run
 

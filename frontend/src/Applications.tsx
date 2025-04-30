@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
+import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,6 +11,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import dayjs from "dayjs";
 
 import { Application, ApplicationFilter, getApplications, saveApplications, newApplication } from "./api/Application";
+import { inDemoMode } from "./api/Config";
+import { useSessionStore } from "./api/Session";
 
 import ApplicationList from "./components/ApplicationList";
 import CloseOldApplications from "./components/CloseOldApplications";
@@ -23,6 +26,8 @@ function Screen() {
     const [filters, setFilters] = useState<ApplicationFilter[]>(["status:active"]);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchParams, setSearchParams] = useSearchParams();
+    const hideDemoWarning = useSessionStore((state) => state.hideDemoWarning);
+    const setHideDemoWarning = useSessionStore((state) => state.setHideDemoWarning);
 
     const focusApplication = (applicationId: string, focused: boolean) => {
         const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
@@ -128,6 +133,17 @@ function Screen() {
                 handleSearchQueryChange={(queryText) => handleSearchQueryChange(queryText)}
                 searchQuery={searchQuery}
             />
+            {inDemoMode && !hideDemoWarning && (
+                // Consider moving this to its own component. For now, we only need it on this page.
+                <Alert variant="warning" onClose={() => setHideDemoWarning(true)} dismissible>
+                    <Alert.Heading>Demo Mode</Alert.Heading>
+                    <ul>
+                        <li>Company names and notes have been sanitized.</li>
+                        <li>Feel free to try everything, including edit, save, and delete.</li>
+                        <li>Your changes won't be permanently saved.</li>
+                    </ul>
+                </Alert>
+            )}
             <Container className="mt-4">
                 <Row>
                     <Col>
