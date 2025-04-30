@@ -10,11 +10,18 @@ function Screen() {
             <Container className="mt-4">
                 <Row>
                     <Col>
-                        <p>Job search tools</p>
+                        <p>Some tools for my 2025 job search.</p>
                         <p>
                             See{" "}
                             <a href="https://github.com/joecullin/job-search-tracker" target="_blank">
                                 github/joecullin/job-search-tracker
+                            </a>
+                            .
+                        </p>
+                        <p>
+                            Live demo on github pages at{" "}
+                            <a href="https://joecullin.github.io/job-search-tracker/" target="_blank">
+                                joecullin.github.io/job-search-tracker/
                             </a>
                             .
                         </p>

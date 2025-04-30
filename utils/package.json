@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc --build \"ts.config.json\"",
     "sankey": "npm run build && node dist/utils/src/sankey-generator.js",
+    "real2sample": "export LOCAL_FILESYSTEM_DATA_PATH=/Users/joecullin/code/job-search-tracker/data && export LOCAL_FILESYSTEM_SAMPLE_DATA_PATH=/Users/joecullin/code/job-search-tracker/sample_data && npm run build && node dist/utils/src/real2sample.js",
     "import": "npm run build && node dist/utils/src/import.js"
   },
   "author": "Joe Cullin",

@@ -1,11 +1,18 @@
 import { Application, ApplicationFilter, ApplicationStatusDefs, ApplicationStatusId } from "../../../common/Application";
 import { v4 as uuidv4 } from "uuid";
+import { demoData } from "../../../sample_data/demo_data";
 
 export * from "../../../common/Application";
 
 const apiBaseUrl = "http://localhost:3000/api/v1";
 
+// Use dummy data when we're running in anything other than vite "dev" mode
+const demoMode = window.location.host !== "localhost:5173";
+
 export const getApplications = async (): Promise<Application[]> => {
+    if (demoMode) {
+        return demoData;
+    }
     const requestUrl = `${apiBaseUrl}/applications`;
     try {
         const response = await fetch(requestUrl);
@@ -63,6 +70,9 @@ export const filterApplications = (
 };
 
 export const saveApplications = async (applications: Application[]): Promise<void> => {
+    if (demoMode) {
+        return;
+    }
     const requestUrl = `${apiBaseUrl}/applications`;
     try {
         await fetch(requestUrl, {

@@ -13,7 +13,11 @@ Some tools for my 2025 job search.
   - Design, responsiveness, tests, security, scale & performance, etc.
   - (In other words, don't judge this—or anything in my public github for that matter—as if it were my professional work.)
 
-I might eventually share these by deploying them publicly with demo data, but for now I'm only running them locally.
+## Demo
+
+I deployed to [github pages](https://joecullin.github.io/job-search-tracker/Analysis) with anonymized data. The dates, statuses, and applications are my own real job search data, but the company names & notes have been scrubbed.
+
+(I haven't put effort into window sizes beyond my macbook air. Hopefully it's not awful-looking on your screen.)
 
 ## Screenshots
 
@@ -27,6 +31,7 @@ I might eventually share these by deploying them publicly with demo data, but fo
 - Forcing myself to use [Typescript](https://www.typescriptlang.org/) more.
 - Visualizations with [Plot](https://observablehq.com/plot/) and [ECharts](https://echarts.apache.org/) instead of [Chart.js](https://www.chartjs.org/).
 - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) instead of [axios](https://www.npmjs.com/package/axios).
+- [GitHub Actions and Pages](https://docs.github.com/en/actions) instead of [GitLab CI/CD](https://docs.gitlab.com/ci/), Azure DevOps, Jenkins, etc.
 
 ## Install and run
 
