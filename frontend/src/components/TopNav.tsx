@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -41,13 +41,13 @@ const TopNav = ({ currentItemLabel, handleSearchQueryChange, searchQuery }: Comp
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/job-search-tracker/" active={currentItemLabel === "Home"}>
+                    <Nav.Link as={Link} to="/" active={currentItemLabel === "Home"}>
                         Home
                     </Nav.Link>
-                    <Nav.Link href="/job-search-tracker/Applications" active={currentItemLabel === "Applications"}>
+                    <Nav.Link as={Link} to="/Applications" active={currentItemLabel === "Applications"}>
                         Applications
                     </Nav.Link>
-                    <Nav.Link href="/job-search-tracker/Analysis" active={currentItemLabel === "Analysis"}>
+                    <Nav.Link as={Link} to="/Analysis" active={currentItemLabel === "Analysis"}>
                         Analysis
                     </Nav.Link>
                 </Nav>
