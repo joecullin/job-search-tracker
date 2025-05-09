@@ -37,6 +37,19 @@ export default function ApplicationList({
     };
 
     const filteredApplications = filterApplications(applications, filters, searchQuery);
+
+    // Show the "new application" form for a not-yet-saved application, even if it doesn't match filters.
+    applications
+        .filter(
+            (app) =>
+                app.statusLog.length === 0 && // no status yet (never saved)
+                editingApplications.includes(app.id) && // edit form is open
+                !filteredApplications.find((filteredApp) => app.id === filteredApp.id), // filters would've excluded it
+        )
+        .forEach((app) => {
+            filteredApplications.unshift(app);
+        });
+
     return (
         <Fragment>
             <Row>

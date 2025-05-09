@@ -51,7 +51,8 @@ export default function ApplicationCard({
         <Card
             border={isEditing ? "primary" : isFocused ? "dark" : ""}
             className="applications-application-card"
-            onClick={() => !isEditing && focusApplication(application.id, !isFocused)}
+            // click anywhere in collapsed card to expand:
+            onClick={() => !isEditing && !isFocused && focusApplication(application.id, !isFocused)}
             ref={cardRef}
         >
             <Card.Body>
@@ -61,7 +62,24 @@ export default function ApplicationCard({
                         whiteSpace: "nowrap",
                     }}
                 >
-                    {application.companyName !== "" ? application.companyName : application.id}
+                    {application.companyName !== ""
+                        ? application.companyName
+                        : `New application (${application.id.split("-")[0]})`}
+
+                    {isFocused && !isEditing && (
+                        // For expanded card: click the "▲" button to collapse.
+                        // if isEditing, then use the "cancel" button.
+                        <Button
+                            variant="outline-secondary"
+                            size="sm"
+                            className="float-end"
+                            onClick={() => {
+                                focusApplication(application.id, false);
+                            }}
+                        >
+                            ▲
+                        </Button>
+                    )}
                 </Card.Title>
                 {!isEditing && (
                     <div>
@@ -195,17 +213,19 @@ export default function ApplicationCard({
                         >
                             cancel
                         </Button>
-                        <Button
-                            variant="danger"
-                            className="float-end"
-                            style={{ margin: ".5rem" }}
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                deleteApplication(application.id);
-                            }}
-                        >
-                            delete
-                        </Button>
+                        {application.statusLog.length > 0 && ( // no delete button for new (not-yet-saved) applications.
+                            <Button
+                                variant="danger"
+                                className="float-end"
+                                style={{ margin: ".5rem" }}
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    deleteApplication(application.id);
+                                }}
+                            >
+                                delete
+                            </Button>
+                        )}
                     </Fragment>
                 )}
             </Card.Footer>
