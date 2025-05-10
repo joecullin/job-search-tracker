@@ -14,14 +14,19 @@ export const getApplications = async (): Promise<Application[]> => {
     const requestUrl = `${apiBaseUrl}/applications`;
     try {
         const response = await fetch(requestUrl);
+        if (!response.ok) {
+            throw Error(`Error response from server.`);
+        }
         try {
             const applications = await response.json();
             return applications;
         } catch (error) {
             console.log(`error parsing fetched data!`, error);
+            throw Error(`Error parsing data from server.`);
         }
     } catch (error) {
         console.log(`error fetching data!`, error);
+        throw error;
     }
     return [];
 };
@@ -73,15 +78,19 @@ export const saveApplications = async (applications: Application[]): Promise<voi
     }
     const requestUrl = `${apiBaseUrl}/applications`;
     try {
-        await fetch(requestUrl, {
+        const response = await fetch(requestUrl, {
             method: "PUT",
             body: JSON.stringify(applications),
             headers: {
                 "Content-Type": "application/json",
             },
         });
+        if (!response.ok) {
+            throw Error(`Error response when saving data: ${response.status}`);
+        }
     } catch (error) {
         console.log(`error saving data!`, error);
+        throw Error("Server error while saving changes.");
     }
 };
 

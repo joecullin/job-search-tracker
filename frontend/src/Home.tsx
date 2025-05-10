@@ -1,12 +1,12 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TopNav from "./components/TopNav";
+import TopBar from "./components/TopBar";
 
 function Screen() {
     return (
         <div>
-            <TopNav currentItemLabel="Home" />
+            <TopBar currentItemLabel="Home" />
             <Container className="mt-4">
                 <Row>
                     <Col>

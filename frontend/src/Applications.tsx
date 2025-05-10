@@ -13,10 +13,11 @@ import dayjs from "dayjs";
 import { Application, ApplicationFilter, getApplications, saveApplications, newApplication } from "./api/Application";
 import { inDemoMode } from "./api/Config";
 import { useSessionStore } from "./api/Session";
+import { useNotificationStore } from "./api/useNotificationStore";
 
 import ApplicationList from "./components/ApplicationList";
 import CloseOldApplications from "./components/CloseOldApplications";
-import TopNav from "./components/TopNav";
+import TopBar from "./components/TopBar";
 
 function Screen() {
     const [applications, setApplications] = useState<Application[]>([]);
@@ -28,6 +29,7 @@ function Screen() {
     const [searchParams, setSearchParams] = useSearchParams();
     const hideDemoWarning = useSessionStore((state) => state.hideDemoWarning);
     const setHideDemoWarning = useSessionStore((state) => state.setHideDemoWarning);
+    const addNotification = useNotificationStore((state) => state.addNotification);
 
     const focusApplication = (applicationId: string, focused: boolean) => {
         const focusedIds = focusedApplications.filter((id: string) => id !== applicationId);
@@ -46,7 +48,7 @@ function Screen() {
         focusApplication(applicationId, editing);
     };
 
-    const saveChanges = (applicationId: string, application: Application) => {
+    const saveChanges = async (applicationId: string, application: Application) => {
         // Add a record to statusLog, if this is a new application or if status changed.
         if (
             application.statusLog.length === 0 ||
@@ -66,7 +68,13 @@ function Screen() {
         }
 
         // Save to backend.
-        saveApplications(applications);
+        try {
+            await saveApplications(applications);
+            addNotification({ notificationType: "success", message: "Saved changes!" });
+        } catch (error) {
+            console.log(`error saving data!`, error);
+            addNotification({ notificationType: "error", message: "Error saving changes." });
+        }
 
         // Close edit mode.
         editingApplication(applicationId, false);
@@ -80,18 +88,19 @@ function Screen() {
         editingApplication(application.id, true);
     };
 
-    const deleteApplication = (applicationId: string) => {
+    const deleteApplication = async (applicationId: string) => {
         const remainingApplications = applications.filter((app) => app.id !== applicationId);
         setApplications(remainingApplications);
         // Save to backend.
-        saveApplications(remainingApplications);
+        try {
+            await saveApplications(remainingApplications);
+            addNotification({ notificationType: "success", message: "Saved changes!" });
+        } catch (error) {
+            console.log(`error saving data!`, error);
+            addNotification({ notificationType: "error", message: "Delete failed. Error saving to server." });
+        }
         // Reset edit mode.
         editingApplication(applicationId, true);
-    };
-
-    const loadData = async () => {
-        const allApplications = await getApplications();
-        setApplications(allApplications);
     };
 
     const handleSearchQueryChange = (queryText: string) => {
@@ -100,13 +109,23 @@ function Screen() {
     };
 
     useEffect(() => {
+        const loadData = async () => {
+            try {
+                const allApplications = await getApplications();
+                setApplications(allApplications);
+            } catch (error) {
+                console.log(`error loading data!`, error);
+                addNotification({ notificationType: "error", message: "Error fetching data." });
+            }
+        };
+
         const searchQuery = searchParams.get("search") || "";
         setSearchQuery(searchQuery);
         if (searchQuery !== "") {
             setFilters([]);
         }
         loadData();
-    }, [searchParams]);
+    }, [searchParams, addNotification]);
 
     // Some rough counts for now, until I add a better stats view.
     const startOfToday = dayjs().startOf("date");
@@ -128,7 +147,7 @@ function Screen() {
 
     return (
         <div>
-            <TopNav
+            <TopBar
                 currentItemLabel="Applications"
                 handleSearchQueryChange={(queryText) => handleSearchQueryChange(queryText)}
                 searchQuery={searchQuery}

@@ -9,23 +9,29 @@ import ApplicationCalendar from "./components/analytics/ApplicationCalendar";
 import ApplicationsVsRejectionsTimeline from "./components/analytics/ApplicationsVsRejectionsTimeline";
 import ApplicationProgress from "./components/analytics/ApplicationProgress";
 import ApplicationFlow from "./components/analytics/ApplicationFlow";
-import TopNav from "./components/TopNav";
+import TopBar from "./components/TopBar";
+import { useNotificationStore } from "./api/useNotificationStore";
 
 function Screen() {
     const [applications, setApplications] = useState<Application[]>([]);
-
-    const loadData = async () => {
-        const allApplications = await getApplications();
-        setApplications(allApplications);
-    };
+    const addNotification = useNotificationStore((state) => state.addNotification);
 
     useEffect(() => {
+        const loadData = async () => {
+            try {
+                const allApplications = await getApplications();
+                setApplications(allApplications);
+            } catch (error) {
+                console.log(`error loading data!`, error);
+                addNotification({ notificationType: "error", message: "Error fetching data." });
+            }
+        };
         loadData();
-    }, []);
+    }, [addNotification]);
 
     return (
         <div>
-            <TopNav currentItemLabel="Analysis" />
+            <TopBar currentItemLabel="Analysis" />
             <Container className="mt-4">
                 <Row>
                     <Col xs={12} sm={6}>
