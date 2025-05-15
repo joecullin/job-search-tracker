@@ -23,7 +23,7 @@ const Notification = ({ message, notificationType, removeNotification }: Notific
     } else if (notificationType === "success") {
         bg = "success";
         headerText = "✔ success";
-        delay = 1000;
+        delay = 2000;
     }
 
     // This gets called automatically after delay, and/or when user clicks the "close" button.
