@@ -67,6 +67,7 @@ export default function ApplicationForm({ application, saveChanges }: Applicatio
                     <Form.Group className="mb-3" controlId="formCompany">
                         <Form.Label>Company</Form.Label>
                         <Form.Control
+                            autoFocus={application.companyName === ""}
                             value={application.companyName}
                             placeholder="example: Acme Inc"
                             onChange={(event) => {
