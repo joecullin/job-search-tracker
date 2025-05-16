@@ -63,9 +63,33 @@ export const filterApplications = (
     }
     if (searchQuery && searchQuery !== "") {
         const searchString = searchQuery.toLowerCase();
+
+        const extractSearchableText = (application: Application): string => {
+            const strings = [] as string[];
+            const skipFields = [
+                "id",
+                "timestamp",
+                "lastContactDate",
+                "reminderDate", // all except firstContactDate
+            ];
+            const extractStrings = (input: object) => {
+                Object.entries(input).forEach(([key, value]) => {
+                    if (!skipFields.includes(key)) {
+                        if (typeof value === "string") {
+                            strings.push(value);
+                        } else if (typeof value === "object") {
+                            extractStrings(value);
+                        }
+                    }
+                });
+            };
+            extractStrings(application);
+            return strings.flat().join("\n").toLowerCase();
+        };
+
         filtered = filtered.filter((app) => {
-            const flattened = JSON.stringify(app).toLowerCase();
-            return flattened.includes(searchString);
+            const appText = extractSearchableText(app);
+            return appText.includes(searchString);
         });
     }
 
