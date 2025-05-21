@@ -7,6 +7,19 @@ export * from "../../../common/Application";
 
 const apiBaseUrl = "http://localhost:3000/api/v1";
 
+const cleanApplicationHistory = (application: Application): Application => {
+    // If we gave up on an application and marked it as ignored, then we got a later update, filter out the ignored status.
+    // (If we don't do this, it throws off the sankey flow diagram significantly.)
+    // Might be better to do this cleanup on write, but it's easier to do it as an afterthought on read for now.
+    if (
+        application.statusLog.find((logEntry) => logEntry.status === "applicationIgnored") &&
+        application.statusLog[application.statusLog.length - 1].status !== "applicationIgnored"
+    ) {
+        application.statusLog = application.statusLog.filter((logEntry) => logEntry.status !== "applicationIgnored");
+    }
+    return application;
+};
+
 export const getApplications = async (): Promise<Application[]> => {
     if (inDemoMode) {
         return demoData;
@@ -19,7 +32,7 @@ export const getApplications = async (): Promise<Application[]> => {
         }
         try {
             const applications = await response.json();
-            return applications;
+            return applications.map((app: Application) => cleanApplicationHistory(app));
         } catch (error) {
             console.log(`error parsing fetched data!`, error);
             throw Error(`Error parsing data from server.`);
