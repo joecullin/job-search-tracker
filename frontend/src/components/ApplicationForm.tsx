@@ -1,6 +1,10 @@
+import { useState, useContext } from "react";
+import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import JobSourcesContext from "../api/JobSourcesContext";
 import { Application } from "../api/Application";
 import { ApplicationStatusDefs, applicationStatusLabel } from "../api/Application";
 
@@ -10,6 +14,9 @@ interface ApplicationFormProps {
 }
 
 export default function ApplicationForm({ application, saveChanges }: ApplicationFormProps) {
+    const [newSource, setNewSource] = useState("");
+    const { jobSources, setJobSources } = useContext(JobSourcesContext);
+
     const handleChangeNote = (value: string) => {
         const newValue = value ? value.slice(0, 50000) : ""; //TODO: more explicit validation and feedback.
         saveChanges({ note: newValue });
@@ -25,6 +32,22 @@ export default function ApplicationForm({ application, saveChanges }: Applicatio
 
     const handleChangeSource = (value: string) => {
         saveChanges({ source: value });
+    };
+
+    const handleChangeNewSource = (value: string) => {
+        setNewSource(value);
+    };
+
+    const addNewSource = () => {
+        // update sources list:
+        const sources = jobSources;
+        sources.push(newSource);
+        sources.sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
+        setJobSources(sources);
+        // update this application:
+        saveChanges({ source: newSource });
+        // reset the "add source" form:
+        setNewSource("");
     };
 
     const handleChangeStatus = (value: string) => {
@@ -119,14 +142,68 @@ export default function ApplicationForm({ application, saveChanges }: Applicatio
                 <Col xs={6}>
                     <Form.Group className="mb-3" controlId="formSource">
                         <Form.Label>Source</Form.Label>
-                        <Form.Control
+                        {/* Make it easy to re-use a previous source. */}
+                        <Form.Select
                             value={application.source}
-                            placeholder="example: Indeed"
                             onChange={(event) => {
                                 event.preventDefault();
                                 handleChangeSource(event.target.value);
                             }}
-                        />
+                        >
+                            <option value="" key="blank">
+                                Choose a source
+                            </option>
+                            {jobSources
+                                .filter((source) => source !== "other")
+                                .map((source) => {
+                                    return (
+                                        <option value={source} key={source}>
+                                            {source}
+                                        </option>
+                                    );
+                                })}
+                            <option value="other" key="other">
+                                other
+                            </option>
+                        </Form.Select>
+                        {/* Define a new source. */}
+                        {application.source === "other" && (
+                            <Form.Group
+                                className="mb-3"
+                                controlId="formNewSource"
+                                as={Row}
+                                style={{
+                                    padding: "0.5rem",
+                                    margin: "1rem",
+                                    border: "1px solid white",
+                                }}
+                            >
+                                <Form.Label column sm={3}>
+                                    New source:
+                                </Form.Label>
+                                <Col sm={7}>
+                                    <Form.Control
+                                        value={newSource}
+                                        placeholder="example: Indeed"
+                                        onChange={(event) => {
+                                            event.preventDefault();
+                                            handleChangeNewSource(event.target.value);
+                                        }}
+                                    />
+                                </Col>
+                                <Col sm={2}>
+                                    <Button
+                                        variant="secondary"
+                                        onClick={(event) => {
+                                            event.stopPropagation();
+                                            addNewSource();
+                                        }}
+                                    >
+                                        add
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                        )}
                     </Form.Group>
                 </Col>
             </Row>

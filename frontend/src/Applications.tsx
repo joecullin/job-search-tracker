@@ -10,6 +10,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import dayjs from "dayjs";
 
+import JobSourcesContext from "./api/JobSourcesContext.tsx";
+
 import { Application, ApplicationFilter, getApplications, saveApplications, newApplication } from "./api/Application";
 import { inDemoMode } from "./api/Config";
 import { useSessionStore } from "./api/Session";
@@ -27,6 +29,7 @@ function Screen() {
     const [filters, setFilters] = useState<ApplicationFilter[]>(["status:active"]);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchParams, setSearchParams] = useSearchParams();
+    const [jobSources, setJobSources] = useState<string[]>([]);
     const hideDemoWarning = useSessionStore((state) => state.hideDemoWarning);
     const setHideDemoWarning = useSessionStore((state) => state.setHideDemoWarning);
     const addNotification = useNotificationStore((state) => state.addNotification);
@@ -126,6 +129,22 @@ function Screen() {
         }
         loadData();
     }, [searchParams, addNotification]);
+
+    const updateJobSources = (sources: string[]) => {
+        const cleaned = sources.filter((source) => source !== "");
+        cleaned.sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
+        setJobSources(cleaned);
+    };
+
+    useEffect(() => {
+        const newSources = new Set(applications.map((app) => app.source).filter((source) => source !== ""));
+        const existingSources = new Set(jobSources);
+
+        // Should update my target version so I can use symmetricDifference.
+        if (existingSources.size !== newSources.size || newSources.size !== new Set([...existingSources, ...newSources]).size) {
+            updateJobSources([...newSources]);
+        }
+    }, [applications, jobSources]);
 
     // Some rough counts for now, until I add a better stats view.
     const startOfToday = dayjs().startOf("date");
@@ -262,17 +281,19 @@ function Screen() {
                 )}
                 <Row>
                     <Col>
-                        <ApplicationList
-                            applications={applications}
-                            focusedApplications={focusedApplications}
-                            editingApplications={editingApplications}
-                            focusApplication={(applicationId, focused) => focusApplication(applicationId, focused)}
-                            editingApplication={(applicationId, editing) => editingApplication(applicationId, editing)}
-                            saveChanges={(applicationId, changes) => saveChanges(applicationId, changes)}
-                            deleteApplication={(applicationId) => deleteApplication(applicationId)}
-                            filters={filters}
-                            searchQuery={searchQuery}
-                        />
+                        <JobSourcesContext.Provider value={{ jobSources, setJobSources }}>
+                            <ApplicationList
+                                applications={applications}
+                                focusedApplications={focusedApplications}
+                                editingApplications={editingApplications}
+                                focusApplication={(applicationId, focused) => focusApplication(applicationId, focused)}
+                                editingApplication={(applicationId, editing) => editingApplication(applicationId, editing)}
+                                saveChanges={(applicationId, changes) => saveChanges(applicationId, changes)}
+                                deleteApplication={(applicationId) => deleteApplication(applicationId)}
+                                filters={filters}
+                                searchQuery={searchQuery}
+                            />
+                        </JobSourcesContext.Provider>
                     </Col>
                 </Row>
             </Container>
