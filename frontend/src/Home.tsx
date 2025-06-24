@@ -20,8 +20,8 @@ function Screen() {
                         </p>
                         <p>
                             Live demo on github pages at{" "}
-                            <a href="https://joecullin.github.io/job-search-tracker/" target="_blank">
-                                joecullin.github.io/job-search-tracker/
+                            <a href="https://joecullin.github.io/job-search-tracker/Applications" target="_blank">
+                                joecullin.github.io/job-search-tracker/Applications
                             </a>
                             .
                         </p>
