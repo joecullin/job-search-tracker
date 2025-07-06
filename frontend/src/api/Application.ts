@@ -11,11 +11,13 @@ const cleanApplicationHistory = (application: Application): Application => {
     // If we gave up on an application and marked it as ignored, then we got a later update, filter out the ignored status.
     // (If we don't do this, it throws off the sankey flow diagram significantly.)
     // Might be better to do this cleanup on write, but it's easier to do it as an afterthought on read for now.
-    if (
-        application.statusLog.find((logEntry) => logEntry.status === "applicationIgnored") &&
-        application.statusLog[application.statusLog.length - 1].status !== "applicationIgnored"
-    ) {
-        application.statusLog = application.statusLog.filter((logEntry) => logEntry.status !== "applicationIgnored");
+    for (const skipStatus of ["applicationIgnored", "unresponsive"]) {
+        if (
+            application.statusLog.find((logEntry) => logEntry.status === skipStatus) &&
+            application.statusLog[application.statusLog.length - 1].status !== skipStatus
+        ) {
+            application.statusLog = application.statusLog.filter((logEntry) => logEntry.status !== skipStatus);
+        }
     }
     return application;
 };

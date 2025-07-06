@@ -124,6 +124,9 @@ const ApplicationFlow = ({ applications }: ComponentProps) => {
                     color: "gradient",
                     curveness: 0.5,
                 },
+                label: {
+                    formatter: "{b}: {c}",
+                },
                 // Saving some options I played with:
                 // layout: 'none',
                 // lineStyle: { curveness: .8 },
