@@ -14,7 +14,14 @@ const ApplicationProgress = ({ applications }: ComponentProps) => {
         if (containerRef?.current) {
             applications.sort((a, b) => a.statusLog[0].timestamp.localeCompare(b.statusLog[0].timestamp));
             const overallStartDate = dayjs(applications[0]?.firstContactDate);
-            const overallEndDate = dayjs();
+
+            // If we're in an active search, show progress up to today.
+            // If we're looking back at an old search, stop at the last event date.
+            // (Guess the context based on a large gap in activity.)
+            const lastEvents = applications.map((a) => a.statusLog[a.statusLog.length - 1].timestamp);
+            lastEvents.sort();
+            const lastEvent = dayjs(lastEvents.pop());
+            const overallEndDate = dayjs().diff(dayjs(lastEvent), "days") > 30 ? lastEvent : dayjs();
             const overallDays = overallEndDate.diff(overallStartDate, "days");
 
             type plotDataEntry = {
