@@ -4,7 +4,7 @@ export const demoData: Application[] =
 [
     {
         "id": "412bdda6-8fc1-432c-8d73-a4eab2eb13d0",
-        "companyName": "Gold Star Chili",
+        "companyName": "Big Boy Restaurants",
         "role": "Sr Fullstack Eng",
         "status": "withdrew",
         "note": "",
@@ -25,7 +25,7 @@ export const demoData: Application[] =
     },
     {
         "id": "a623133e-142b-4c0b-96f2-4b4159e9c091",
-        "companyName": "Original Tommy's",
+        "companyName": "Pollo Tropical",
         "role": "Sr Eng",
         "status": "applied",
         "note": "",
@@ -42,7 +42,7 @@ export const demoData: Application[] =
     },
     {
         "id": "a942e247-7312-4cd4-ba05-9c537f4761c9",
-        "companyName": "Shipley Do-Nuts",
+        "companyName": "Wild Wing",
         "role": "Eng",
         "status": "applied",
         "note": "",
@@ -59,7 +59,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c12f0602-57d2-44dc-bd15-0a9420b9f744",
-        "companyName": "Lee's Famous Recipe Chicken",
+        "companyName": "King's Seafood Company",
         "role": "Eng",
         "status": "applicationRejected",
         "note": "",
@@ -80,7 +80,7 @@ export const demoData: Application[] =
     },
     {
         "id": "09d3089e-5941-431c-898c-af9abc34806d",
-        "companyName": "Yoshinoya",
+        "companyName": "Quizno's Classic Subs",
         "role": "Eng",
         "status": "applied",
         "note": "",
@@ -97,15 +97,19 @@ export const demoData: Application[] =
     },
     {
         "id": "a6d3848f-08e0-46c9-9df8-a515500ef1ba",
-        "companyName": "Original Tommy's",
+        "companyName": "White Castle",
         "role": "Eng Mgr",
-        "status": "applied",
+        "status": "applicationRejected",
         "note": "",
         "source": "Built in nyc",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-06-17T13:30:16.312Z"
+            },
+            {
+                "status": "applicationRejected",
+                "timestamp": "2025-06-27T11:03:36.905Z"
             }
         ],
         "firstContactDate": "2025-06-17",
@@ -114,7 +118,7 @@ export const demoData: Application[] =
     },
     {
         "id": "db73c97d-6e45-4236-9407-6f8639e99ea6",
-        "companyName": "Carino's Italian",
+        "companyName": "Amato's",
         "role": "Eng Mgr",
         "status": "applied",
         "note": "",
@@ -131,15 +135,19 @@ export const demoData: Application[] =
     },
     {
         "id": "e5079848-a167-44d5-b59a-12c773f00da5",
-        "companyName": "Saltgrass Steak House",
+        "companyName": "Auntie Anne's",
         "role": "Eng Mgr",
-        "status": "applied",
+        "status": "applicationRejected",
         "note": "",
         "source": "Welcome to the Jungle",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-06-16T13:21:59.686Z"
+            },
+            {
+                "status": "applicationRejected",
+                "timestamp": "2025-06-27T13:18:27.471Z"
             }
         ],
         "firstContactDate": "2025-06-16",
@@ -148,7 +156,7 @@ export const demoData: Application[] =
     },
     {
         "id": "a870b6d1-30ef-4103-95e1-3d94fcee77c4",
-        "companyName": "Pizza Ranch",
+        "companyName": "Jamba Juice",
         "role": "Lead Eng",
         "status": "applicationRejected",
         "note": "",
@@ -169,7 +177,7 @@ export const demoData: Application[] =
     },
     {
         "id": "8d74a80d-6f27-4b62-bb3c-9bfa69a1d1a2",
-        "companyName": "Sbarro",
+        "companyName": "White Castle",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -190,7 +198,7 @@ export const demoData: Application[] =
     },
     {
         "id": "2171fa18-49ea-48b2-8461-363624989213",
-        "companyName": "Rosati's",
+        "companyName": "Little Caesars",
         "role": "Eng",
         "status": "applied",
         "note": "",
@@ -207,7 +215,7 @@ export const demoData: Application[] =
     },
     {
         "id": "373e3e39-915b-4be2-8f5a-364d1cabf0ba",
-        "companyName": "Booster Juice",
+        "companyName": "Einstein Bros. Bagels",
         "role": "Sr Eng",
         "status": "applied",
         "note": "",
@@ -224,15 +232,19 @@ export const demoData: Application[] =
     },
     {
         "id": "60a34d79-d1c1-45e6-af6c-a2ceeaf28b46",
-        "companyName": "The Old Spaghetti Factory",
+        "companyName": "Second Cup Café",
         "role": "Sr Eng",
-        "status": "applied",
+        "status": "withdrew",
         "note": "",
         "source": "hacker news",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-06-06T15:07:33.467Z"
+            },
+            {
+                "status": "withdrew",
+                "timestamp": "2025-06-27T12:54:08.754Z"
             }
         ],
         "firstContactDate": "2025-06-06",
@@ -241,9 +253,9 @@ export const demoData: Application[] =
     },
     {
         "id": "a5c049c1-79c4-4fa0-9a04-d340850d3644",
-        "companyName": "Blake's Lotaburger",
+        "companyName": "Checkers and Rally's",
         "role": "Sr Eng",
-        "status": "initialScreen",
+        "status": "rejected",
         "note": "",
         "source": "hacker news",
         "statusLog": [
@@ -254,6 +266,14 @@ export const demoData: Application[] =
             {
                 "status": "initialScreen",
                 "timestamp": "2025-06-24T14:59:45.256Z"
+            },
+            {
+                "status": "interview1",
+                "timestamp": "2025-06-25T18:01:53.013Z"
+            },
+            {
+                "status": "rejected",
+                "timestamp": "2025-06-27T11:08:48.116Z"
             }
         ],
         "firstContactDate": "2025-06-06",
@@ -262,7 +282,7 @@ export const demoData: Application[] =
     },
     {
         "id": "ac007aac-ef69-4b3b-88be-9d10507954f8",
-        "companyName": "TCBY",
+        "companyName": "SuperDeluxe",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -287,15 +307,19 @@ export const demoData: Application[] =
     },
     {
         "id": "e968876a-8d01-4cca-ab65-441efc374bf9",
-        "companyName": "Duchess",
+        "companyName": "Milo's Hamburgers",
         "role": "Eng",
-        "status": "applied",
+        "status": "applicationIgnored",
         "note": "",
         "source": "Built in nyc",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-05-29T19:21:30.097Z"
+            },
+            {
+                "status": "applicationIgnored",
+                "timestamp": "2025-06-27T11:08:34.241Z"
             }
         ],
         "firstContactDate": "2025-05-29",
@@ -304,7 +328,7 @@ export const demoData: Application[] =
     },
     {
         "id": "756dafc2-c75a-42d8-b5b0-5d0fe75054da",
-        "companyName": "Marco's Pizza",
+        "companyName": "Fosters Freeze",
         "role": "Eng",
         "status": "rejected",
         "note": "",
@@ -333,7 +357,7 @@ export const demoData: Application[] =
     },
     {
         "id": "df509ffb-2afc-4c17-b706-fc6cc1af3f3d",
-        "companyName": "Pizza Inn",
+        "companyName": "Earth Burger",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -354,15 +378,19 @@ export const demoData: Application[] =
     },
     {
         "id": "790f2167-d37d-4366-94d3-10d047ce8635",
-        "companyName": "Carl's Jr.",
+        "companyName": "Wahlburgers",
         "role": "Eng",
-        "status": "applied",
+        "status": "applicationIgnored",
         "note": "",
         "source": "Built in nyc",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-05-29T18:44:19.349Z"
+            },
+            {
+                "status": "applicationIgnored",
+                "timestamp": "2025-06-27T11:08:34.242Z"
             }
         ],
         "firstContactDate": "2025-05-29",
@@ -371,15 +399,19 @@ export const demoData: Application[] =
     },
     {
         "id": "2de88913-2373-4606-b502-0fa15e1b2463",
-        "companyName": "Winchell's Donuts",
+        "companyName": "Chez Ashton",
         "role": "Eng",
-        "status": "applied",
+        "status": "applicationIgnored",
         "note": "",
         "source": "wellfound",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-05-29T17:38:17.802Z"
+            },
+            {
+                "status": "applicationIgnored",
+                "timestamp": "2025-06-27T11:08:34.243Z"
             }
         ],
         "firstContactDate": "2025-05-29",
@@ -388,9 +420,9 @@ export const demoData: Application[] =
     },
     {
         "id": "429e7239-98a4-4c49-842a-b248a1132646",
-        "companyName": "Booster Juice",
+        "companyName": "Chez Ashton",
         "role": "Sr Fullstack Eng",
-        "status": "initialScreen",
+        "status": "rejected",
         "note": "",
         "source": "wellfound",
         "statusLog": [
@@ -401,6 +433,10 @@ export const demoData: Application[] =
             {
                 "status": "initialScreen",
                 "timestamp": "2025-06-06T16:32:52.961Z"
+            },
+            {
+                "status": "rejected",
+                "timestamp": "2025-06-26T12:57:02.597Z"
             }
         ],
         "firstContactDate": "2025-05-29",
@@ -409,7 +445,7 @@ export const demoData: Application[] =
     },
     {
         "id": "4d856424-d2a0-456f-a964-808fee9ca077",
-        "companyName": "Dairy Queen",
+        "companyName": "Village Inn",
         "role": "Eng",
         "status": "applicationRejected",
         "note": "",
@@ -430,7 +466,7 @@ export const demoData: Application[] =
     },
     {
         "id": "6602f628-8c2d-4a8d-a73b-778761e2ea58",
-        "companyName": "Jet's Pizza",
+        "companyName": "Thaï Express",
         "role": "Sr Eng",
         "status": "applicationRejected",
         "note": "",
@@ -451,24 +487,32 @@ export const demoData: Application[] =
     },
     {
         "id": "2bf001c2-d288-4f42-8366-6a30ee1312e2",
-        "companyName": "Slim Chickens",
+        "companyName": "Arby's",
         "role": "Sr Eng",
-        "status": "applied",
+        "status": "applicationRejected",
         "note": "",
         "source": "Built in nyc",
         "statusLog": [
             {
                 "status": "applied",
                 "timestamp": "2025-05-20T16:33:58.755Z"
+            },
+            {
+                "status": "applicationIgnored",
+                "timestamp": "2025-06-27T11:08:34.244Z"
+            },
+            {
+                "status": "applicationRejected",
+                "timestamp": "2025-07-01T18:50:17.730Z"
             }
         ],
         "firstContactDate": "2025-05-20",
-        "lastContactDate": "2025-05-20",
+        "lastContactDate": "2025-07-01",
         "reminderDate": ""
     },
     {
         "id": "e380c087-aa4d-4fef-a6ec-87332fe40fc2",
-        "companyName": "Chester's",
+        "companyName": "Taco del Mar",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -497,7 +541,7 @@ export const demoData: Application[] =
     },
     {
         "id": "e00dd164-1dbb-49d9-98d4-c454cef23d06",
-        "companyName": "A&W",
+        "companyName": "Valentino's",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -522,9 +566,9 @@ export const demoData: Application[] =
     },
     {
         "id": "72954a1d-6791-4d39-b4cc-ffad1ba81da6",
-        "companyName": "Runza",
+        "companyName": "Saladworks",
         "role": "Eng Mgr",
-        "status": "interview2",
+        "status": "withdrew",
         "note": "",
         "source": "engmgrjobs",
         "statusLog": [
@@ -543,15 +587,19 @@ export const demoData: Application[] =
             {
                 "status": "interview2",
                 "timestamp": "2025-06-23T15:59:30.730Z"
+            },
+            {
+                "status": "withdrew",
+                "timestamp": "2025-06-30T14:50:24.364Z"
             }
         ],
         "firstContactDate": "2025-05-20",
-        "lastContactDate": "2025-05-20",
+        "lastContactDate": "2025-06-23",
         "reminderDate": ""
     },
     {
         "id": "bad16d7c-780c-45f1-b68f-99b9b299c992",
-        "companyName": "Arby's",
+        "companyName": "Original Tommy's",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -572,7 +620,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c78d2559-ec04-460c-927d-02ff8d09f7a6",
-        "companyName": "Blaze Pizza",
+        "companyName": "Ruby Tuesday",
         "role": "Eng",
         "status": "applicationRejected",
         "note": "",
@@ -593,7 +641,7 @@ export const demoData: Application[] =
     },
     {
         "id": "305be379-d93c-4516-a9b1-48a2d9e67b9b",
-        "companyName": "Eegee's",
+        "companyName": "Jack's",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -614,7 +662,7 @@ export const demoData: Application[] =
     },
     {
         "id": "096190e6-44d6-4ca8-8383-61490eceb69a",
-        "companyName": "Panera Bread",
+        "companyName": "Arctic Circle Restaurants",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -635,7 +683,7 @@ export const demoData: Application[] =
     },
     {
         "id": "614ce409-58f7-49e6-ac53-0c022c531caf",
-        "companyName": "Long John Silver's",
+        "companyName": "Valentino's",
         "role": "Eng Lead",
         "status": "applicationIgnored",
         "note": "",
@@ -656,7 +704,7 @@ export const demoData: Application[] =
     },
     {
         "id": "93766371-2c71-45f8-9e55-2d435b8c7151",
-        "companyName": "Jamba Juice",
+        "companyName": "The Pizza Company",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -677,7 +725,7 @@ export const demoData: Application[] =
     },
     {
         "id": "53d97231-fec3-4fc0-b912-cda314556e84",
-        "companyName": "Pizza Nova",
+        "companyName": "Wolfgang's Steakhouse",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -710,7 +758,7 @@ export const demoData: Application[] =
     },
     {
         "id": "dac49859-6052-40c5-a42a-c8008de2c35c",
-        "companyName": "85°C Bakery Cafe",
+        "companyName": "Burger King",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -731,7 +779,7 @@ export const demoData: Application[] =
     },
     {
         "id": "66b2ccb5-562f-41b1-b414-64fb324efd15",
-        "companyName": "Zip's Drive-in",
+        "companyName": "Ledo Pizza",
         "role": "Sr Eng",
         "status": "applicationRejected",
         "note": "",
@@ -752,7 +800,7 @@ export const demoData: Application[] =
     },
     {
         "id": "7aba5f3a-7362-46de-8685-cd23e484e051",
-        "companyName": "Papa Murphy's",
+        "companyName": "White Castle",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -773,7 +821,7 @@ export const demoData: Application[] =
     },
     {
         "id": "8f544a45-41a6-429a-a073-460746132c29",
-        "companyName": "Earth Burger",
+        "companyName": "Burger Baron",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -794,9 +842,9 @@ export const demoData: Application[] =
     },
     {
         "id": "15478f7c-c073-441e-8e52-2893c8989b0d",
-        "companyName": "Earth Burger",
+        "companyName": "Golden Chick",
         "role": "Sr Eng",
-        "status": "interview5",
+        "status": "acceptedOffer",
         "note": "",
         "source": "Built in nyc",
         "statusLog": [
@@ -821,8 +869,16 @@ export const demoData: Application[] =
                 "timestamp": "2025-06-18T21:13:43.210Z"
             },
             {
-                "status": "interview5",
+                "status": "interview4",
                 "timestamp": "2025-06-23T17:47:59.602Z"
+            },
+            {
+                "status": "offered",
+                "timestamp": "2025-06-26T17:25:57.293Z"
+            },
+            {
+                "status": "acceptedOffer",
+                "timestamp": "2025-06-26T19:18:10.996Z"
             }
         ],
         "firstContactDate": "2025-05-13",
@@ -831,7 +887,7 @@ export const demoData: Application[] =
     },
     {
         "id": "f6c7aea7-8ae3-46e2-80a3-6ea3d860740b",
-        "companyName": "Sbarro",
+        "companyName": "Wetzel's Pretzels",
         "role": "Eng Lead",
         "status": "rejected",
         "note": "",
@@ -856,7 +912,7 @@ export const demoData: Application[] =
     },
     {
         "id": "67e43d4b-7153-411d-a8c5-ca38442a478d",
-        "companyName": "Auntie Anne's",
+        "companyName": "Quiznos",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -877,7 +933,7 @@ export const demoData: Application[] =
     },
     {
         "id": "b233f359-eca5-43da-9760-db895c846c08",
-        "companyName": "Earth Burger",
+        "companyName": "Potbelly Sandwich Works",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -898,7 +954,7 @@ export const demoData: Application[] =
     },
     {
         "id": "f214c638-a93f-48d3-b362-da8cb63431c4",
-        "companyName": "Moe's Southwest Grill",
+        "companyName": "Tropical Smoothie Cafe",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -919,7 +975,7 @@ export const demoData: Application[] =
     },
     {
         "id": "f565e004-0423-4cab-97f1-3eec9b7e5f4b",
-        "companyName": "Thaï Express",
+        "companyName": "Pollo Tropical",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -944,7 +1000,7 @@ export const demoData: Application[] =
     },
     {
         "id": "dedd0055-cff0-47f3-be65-8c1d9be4cf22",
-        "companyName": "Greco Pizza",
+        "companyName": "Shakey's Pizza",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -965,7 +1021,7 @@ export const demoData: Application[] =
     },
     {
         "id": "f1def5ba-f9b9-4fd5-b9ee-8ec84c4aaf4a",
-        "companyName": "Red Lobster",
+        "companyName": "Carino's Italian",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -986,7 +1042,7 @@ export const demoData: Application[] =
     },
     {
         "id": "5088834d-2dda-4930-9ba2-812848916b5b",
-        "companyName": "Tim Hortons",
+        "companyName": "Burger King",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1007,7 +1063,7 @@ export const demoData: Application[] =
     },
     {
         "id": "19c82007-720d-4095-9361-1b6489c5a4c2",
-        "companyName": "Tudor's Biscuit World",
+        "companyName": "Zippy's",
         "role": "Sr Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -1028,7 +1084,7 @@ export const demoData: Application[] =
     },
     {
         "id": "33294200-4343-459e-ba6a-e60f65915a4e",
-        "companyName": "Pizza Hut",
+        "companyName": "A&W",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1049,7 +1105,7 @@ export const demoData: Application[] =
     },
     {
         "id": "21cbdb3e-6b3a-40d2-a164-3a5f507172f9",
-        "companyName": "A&W Restaurants",
+        "companyName": "Legal Sea Foods",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1070,7 +1126,7 @@ export const demoData: Application[] =
     },
     {
         "id": "d7da9afc-5180-45a7-b898-22bb041df87d",
-        "companyName": "Popeyes",
+        "companyName": "Chez Ashton",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1091,7 +1147,7 @@ export const demoData: Application[] =
     },
     {
         "id": "dc09f234-3e97-41ee-9df9-662195a80631",
-        "companyName": "Waffle House",
+        "companyName": "Good Times Burgers & Frozen Custard",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1112,7 +1168,7 @@ export const demoData: Application[] =
     },
     {
         "id": "4f331b5f-bcd4-4c57-aa12-f401aa940732",
-        "companyName": "Krispy Krunchy Chicken",
+        "companyName": "Taco del Mar",
         "role": "Staff Eng",
         "status": "rejected",
         "note": "",
@@ -1137,7 +1193,7 @@ export const demoData: Application[] =
     },
     {
         "id": "40190db2-8fda-49d6-9338-5ec9b6410471",
-        "companyName": "Swensons",
+        "companyName": "Smoothie King",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1158,7 +1214,7 @@ export const demoData: Application[] =
     },
     {
         "id": "f268c629-5ae8-4516-9176-a09363984a3d",
-        "companyName": "Culvers",
+        "companyName": "Valentine",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -1183,7 +1239,7 @@ export const demoData: Application[] =
     },
     {
         "id": "cbd12d33-742b-4c9e-9519-6be32e2787ed",
-        "companyName": "Culvers",
+        "companyName": "Top Pot Doughnuts",
         "role": "Eng Director",
         "status": "applicationIgnored",
         "note": "",
@@ -1204,7 +1260,7 @@ export const demoData: Application[] =
     },
     {
         "id": "b3e289e6-fca5-400a-ac01-c6a95f960fa3",
-        "companyName": "Pollo Tropical",
+        "companyName": "Steak 'n Shake",
         "role": "Sr Eng",
         "status": "applicationRejected",
         "note": "",
@@ -1225,7 +1281,7 @@ export const demoData: Application[] =
     },
     {
         "id": "91de8e29-0e31-4fd7-82aa-f08b098faa1a",
-        "companyName": "Dodo Pizza",
+        "companyName": "Del Taco",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1246,7 +1302,7 @@ export const demoData: Application[] =
     },
     {
         "id": "511e5fb9-3364-440d-a484-8de696c07dd4",
-        "companyName": "Rubio's Coastal Grill",
+        "companyName": "Pizza Inn",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -1275,7 +1331,7 @@ export const demoData: Application[] =
     },
     {
         "id": "e8119e77-3ef5-44cd-802f-51360c2d2685",
-        "companyName": "Saladworks",
+        "companyName": "Arctic Circle Restaurants",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1296,7 +1352,7 @@ export const demoData: Application[] =
     },
     {
         "id": "510f86a5-0d22-4a72-bd28-1ec4e36b46c6",
-        "companyName": "Pizza Pizza",
+        "companyName": "Hardee's",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1317,7 +1373,7 @@ export const demoData: Application[] =
     },
     {
         "id": "bed1e3bb-81cf-4ff1-871e-93d6688fa32d",
-        "companyName": "Marco's Pizza",
+        "companyName": "Baja Fresh",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1338,7 +1394,7 @@ export const demoData: Application[] =
     },
     {
         "id": "9a88b083-414c-4d06-a0f4-fd2dad1892f3",
-        "companyName": "White Castle",
+        "companyName": "Hero Certified Burgers",
         "role": "Staff/Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1359,7 +1415,7 @@ export const demoData: Application[] =
     },
     {
         "id": "d61a4329-432c-4cb4-8e24-297526073dfe",
-        "companyName": "Long John Silver's",
+        "companyName": "Pizza Pizza",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1380,7 +1436,7 @@ export const demoData: Application[] =
     },
     {
         "id": "b3e12228-7b13-4c6a-8e1b-154f8a15d863",
-        "companyName": "Pizza Hut",
+        "companyName": "Penguin Point",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1401,7 +1457,7 @@ export const demoData: Application[] =
     },
     {
         "id": "d580fa47-a91f-4e88-afdc-5d0f320b6a64",
-        "companyName": "Shipley Do-Nuts",
+        "companyName": "Little Caesars",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -1422,7 +1478,7 @@ export const demoData: Application[] =
     },
     {
         "id": "584f485e-0555-4453-858f-a61b1c9ea7c4",
-        "companyName": "85°C Bakery Cafe",
+        "companyName": "Edo Japan",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1443,7 +1499,7 @@ export const demoData: Application[] =
     },
     {
         "id": "93ed0a30-d75d-4431-a9b8-d6fa4e8855a8",
-        "companyName": "The Pizza Company",
+        "companyName": "Smoothie King",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1464,7 +1520,7 @@ export const demoData: Application[] =
     },
     {
         "id": "a2262715-353d-45a9-9c13-0b6a45ff91f4",
-        "companyName": "Swensons",
+        "companyName": "Kewpee",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -1489,7 +1545,7 @@ export const demoData: Application[] =
     },
     {
         "id": "eeb4dbbb-f1c9-499e-b872-b7a96818b9f5",
-        "companyName": "Thaï Express",
+        "companyName": "Togo's",
         "role": "Sr/Staff Eng",
         "status": "applicationRejected",
         "note": "",
@@ -1510,7 +1566,7 @@ export const demoData: Application[] =
     },
     {
         "id": "6eb2dffd-8353-4f8e-82ef-4853b904ef46",
-        "companyName": "DiBella's",
+        "companyName": "Olive Garden",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -1535,7 +1591,7 @@ export const demoData: Application[] =
     },
     {
         "id": "094bfb5b-c0a6-42f6-bca7-915e710ce3db",
-        "companyName": "Pollo Campero",
+        "companyName": "Manchu Wok",
         "role": "Sr Software Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1556,7 +1612,7 @@ export const demoData: Application[] =
     },
     {
         "id": "d8ce9718-c4e4-48de-92eb-2d2d7ee965e1",
-        "companyName": "Yum-Yum Donuts",
+        "companyName": "85°C Bakery Cafe",
         "role": "General",
         "status": "applicationIgnored",
         "note": "",
@@ -1577,7 +1633,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c1ee78d6-36a2-4df6-8867-1aacc6d0afd9",
-        "companyName": "Togo's",
+        "companyName": "Shakey's Pizza",
         "role": "Lead Founding Eng",
         "status": "applicationRejected",
         "note": "",
@@ -1598,7 +1654,7 @@ export const demoData: Application[] =
     },
     {
         "id": "08bb81f8-21d5-40cd-9ce0-f4f238a1d7ba",
-        "companyName": "Extreme Pita",
+        "companyName": "Sizzler",
         "role": "Staff Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1619,7 +1675,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c9579249-b422-49bd-8f6c-1466da8253dd",
-        "companyName": "Wetzel's Pretzels",
+        "companyName": "Pizza Inn",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1640,7 +1696,7 @@ export const demoData: Application[] =
     },
     {
         "id": "11f51a43-c291-4347-9c98-a52223538283",
-        "companyName": "Hungry Howie's Pizza",
+        "companyName": "Zip's Drive-in",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1661,7 +1717,7 @@ export const demoData: Application[] =
     },
     {
         "id": "24a89545-67d8-4318-b911-56612aaaef76",
-        "companyName": "Jollibee",
+        "companyName": "WingStreet",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -1682,7 +1738,7 @@ export const demoData: Application[] =
     },
     {
         "id": "4a5c1e29-6681-4777-8cab-df09021a1ac1",
-        "companyName": "The Keg",
+        "companyName": "Nathan's Famous",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1703,7 +1759,7 @@ export const demoData: Application[] =
     },
     {
         "id": "92519cf3-8c76-4411-ad13-4cbbf892f027",
-        "companyName": "Golden Chick",
+        "companyName": "Hunt Brothers Pizza",
         "role": "Sr Eng",
         "status": "applicationRejected",
         "note": "",
@@ -1724,7 +1780,7 @@ export const demoData: Application[] =
     },
     {
         "id": "8472f2dc-600a-4537-9ba8-1885fa59bc5f",
-        "companyName": "Lafleur Restaurants",
+        "companyName": "Panera",
         "role": "Sr Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -1745,7 +1801,7 @@ export const demoData: Application[] =
     },
     {
         "id": "a82bb0bd-70e5-493e-8e9c-6885c7cd89ea",
-        "companyName": "The Human Bean",
+        "companyName": "Five Guys Burgers and Fries",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1766,7 +1822,7 @@ export const demoData: Application[] =
     },
     {
         "id": "6da861b1-f614-4b8b-b4eb-cc372a7a6727",
-        "companyName": "In-N-Out Burger",
+        "companyName": "Swensen's",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -1795,7 +1851,7 @@ export const demoData: Application[] =
     },
     {
         "id": "ce16368a-0ef6-4f93-a5bf-9e045b987de1",
-        "companyName": "Spangles",
+        "companyName": "Popeyes",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1816,7 +1872,7 @@ export const demoData: Application[] =
     },
     {
         "id": "90964695-2faa-4990-b20c-8802852b69e8",
-        "companyName": "Burger Street",
+        "companyName": "Peter Piper Pizza",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -1837,7 +1893,7 @@ export const demoData: Application[] =
     },
     {
         "id": "dffd3a51-e07c-47ee-ae94-4b13063afd30",
-        "companyName": "Mr. Sub",
+        "companyName": "Swiss Chalet",
         "role": "Founding Eng",
         "status": "rejected",
         "note": "",
@@ -1862,7 +1918,7 @@ export const demoData: Application[] =
     },
     {
         "id": "1421f875-80dd-4f77-94d7-029478732186",
-        "companyName": "Chez Ashton",
+        "companyName": "Five Guys Burgers and Fries",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1883,7 +1939,7 @@ export const demoData: Application[] =
     },
     {
         "id": "ec5a2945-d867-4cbb-b68f-5f62c14dea0a",
-        "companyName": "85°C Bakery Cafe",
+        "companyName": "Joe's Crab Shack",
         "role": "Fullstack Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1904,7 +1960,7 @@ export const demoData: Application[] =
     },
     {
         "id": "df90a3a0-f60e-4ecf-8a6f-87371e2401b4",
-        "companyName": "Valentino's",
+        "companyName": "Wolfgang's Steakhouse",
         "role": "Eng Director",
         "status": "applicationRejected",
         "note": "",
@@ -1925,7 +1981,7 @@ export const demoData: Application[] =
     },
     {
         "id": "40df8a68-f91b-46c4-91bb-35c54c643201",
-        "companyName": "Wetzel's Pretzels",
+        "companyName": "Earth Burger",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1946,7 +2002,7 @@ export const demoData: Application[] =
     },
     {
         "id": "206e2255-e788-4560-94ac-ee9c79981a57",
-        "companyName": "Carino's Italian",
+        "companyName": "Sbarro",
         "role": "Sr Fullstack Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -1967,7 +2023,7 @@ export const demoData: Application[] =
     },
     {
         "id": "ff2676b3-e028-4a0e-b235-e86fcdf1ffd2",
-        "companyName": "Huddle House",
+        "companyName": "Taco Mayo",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -1988,7 +2044,7 @@ export const demoData: Application[] =
     },
     {
         "id": "1c1584a7-3957-4c17-ad05-bf282fab1802",
-        "companyName": "Peter Piper Pizza",
+        "companyName": "Perkins Restaurant & Bakery",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2009,7 +2065,7 @@ export const demoData: Application[] =
     },
     {
         "id": "e2dd1de6-a815-4156-8524-1973c6924062",
-        "companyName": "Barberitos",
+        "companyName": "Pizza 73",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2030,7 +2086,7 @@ export const demoData: Application[] =
     },
     {
         "id": "1a7e5d11-1ce4-409e-baf6-917168a7b76f",
-        "companyName": "Hardee's",
+        "companyName": "Moe's Southwest Grill",
         "role": "Sr Fullstack Eng",
         "status": "applicationRejected",
         "note": "",
@@ -2051,7 +2107,7 @@ export const demoData: Application[] =
     },
     {
         "id": "8f66588f-2460-41e4-b259-68918a384ba9",
-        "companyName": "Shake Shack",
+        "companyName": "Pizza Inn",
         "role": "Sr Eng",
         "status": "applicationRejected",
         "note": "",
@@ -2072,7 +2128,7 @@ export const demoData: Application[] =
     },
     {
         "id": "ab11edf0-e2e5-4775-a0d4-7aa242714caa",
-        "companyName": "Wetzel's Pretzels",
+        "companyName": "Swiss Chalet",
         "role": "Eng Lead",
         "status": "applicationIgnored",
         "note": "",
@@ -2093,7 +2149,7 @@ export const demoData: Application[] =
     },
     {
         "id": "49e36a2b-d991-447e-be95-4cfb4ed663b1",
-        "companyName": "Jimmy John's",
+        "companyName": "Wetzel's Pretzels",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2114,7 +2170,7 @@ export const demoData: Application[] =
     },
     {
         "id": "1293b1d6-b7ef-44d3-8f1c-bdb2ebb5b0e7",
-        "companyName": "Krystal",
+        "companyName": "Chefette",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2135,7 +2191,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c2ef6bb8-b963-408b-90ea-e17279fb8087",
-        "companyName": "Booster Juice",
+        "companyName": "Auntie Anne's",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2156,7 +2212,7 @@ export const demoData: Application[] =
     },
     {
         "id": "0b73a488-019b-4a25-a78a-5d96fedf6e3e",
-        "companyName": "Honey Dew Donuts",
+        "companyName": "Valentino's",
         "role": "Eng Mgr",
         "status": "unresponsive",
         "note": "",
@@ -2181,7 +2237,7 @@ export const demoData: Application[] =
     },
     {
         "id": "241896cc-4125-4057-82c2-5f19cb9ee42a",
-        "companyName": "Edo Japan",
+        "companyName": "Lee's Famous Recipe Chicken",
         "role": "Staff Eng",
         "status": "applicationRejected",
         "note": "",
@@ -2202,7 +2258,7 @@ export const demoData: Application[] =
     },
     {
         "id": "88787ed4-c4e0-4b98-ab8a-ca7a9dc8b222",
-        "companyName": "Auntie Anne's",
+        "companyName": "Tropical Smoothie Cafe",
         "role": "Full-stack engineer",
         "status": "applicationIgnored",
         "note": "",
@@ -2223,7 +2279,7 @@ export const demoData: Application[] =
     },
     {
         "id": "58f6fd78-56f4-4d9a-b050-a0c95674efe8",
-        "companyName": "Mrs. Winner's Chicken & Biscuits",
+        "companyName": "Boston Pizza",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2244,7 +2300,7 @@ export const demoData: Application[] =
     },
     {
         "id": "983caa75-23d0-46dd-bfe3-54e1165dbdd8",
-        "companyName": "Steak Escape",
+        "companyName": "Church's / Texas Chicken",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2265,7 +2321,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c674f139-7b91-4955-8b72-1420c5fab279",
-        "companyName": "Jason's Deli",
+        "companyName": "Paris Baguette",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2286,7 +2342,7 @@ export const demoData: Application[] =
     },
     {
         "id": "8f8e2689-79e2-4f28-b793-21054853eb65",
-        "companyName": "Taco Tico",
+        "companyName": "Blimpie",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -2311,7 +2367,7 @@ export const demoData: Application[] =
     },
     {
         "id": "2e09b70e-fa49-4717-b7a3-5b11741e0f1b",
-        "companyName": "Bojangles",
+        "companyName": "Freddy's Frozen Custard & Steakburgers",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2332,7 +2388,7 @@ export const demoData: Application[] =
     },
     {
         "id": "a716caef-603e-4014-9f47-1725d61bad8f",
-        "companyName": "Einstein Bros. Bagels",
+        "companyName": "Honey Dew Donuts",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2353,7 +2409,7 @@ export const demoData: Application[] =
     },
     {
         "id": "40903c97-2987-4279-915f-3b3034dc4a2a",
-        "companyName": "Mister Donut",
+        "companyName": "Wendy's",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -2374,7 +2430,7 @@ export const demoData: Application[] =
     },
     {
         "id": "92acf1ac-497a-40fc-8b4b-590c78cb35b7",
-        "companyName": "Chick-fil-A",
+        "companyName": "Krystal",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -2395,7 +2451,7 @@ export const demoData: Application[] =
     },
     {
         "id": "4d27b5c9-60d4-4018-bb74-7587923b36a2",
-        "companyName": "Milo's Hamburgers",
+        "companyName": "Potbelly Sandwich Works",
         "role": "Sr Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2416,7 +2472,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c7a403a3-7fbf-42a0-802c-7e6d6398b796",
-        "companyName": "Cook Out",
+        "companyName": "Tastee-Freeze",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2437,7 +2493,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c435fe73-96f2-4e6f-a88a-b6145cfce66d",
-        "companyName": "White Spot",
+        "companyName": "White Castle",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2458,7 +2514,7 @@ export const demoData: Application[] =
     },
     {
         "id": "b7b31412-6231-4d1f-9e19-95aa517986b7",
-        "companyName": "A&W Restaurants",
+        "companyName": "Mister Donut",
         "role": "Sr Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -2479,7 +2535,7 @@ export const demoData: Application[] =
     },
     {
         "id": "0683bb12-2da1-4e60-ad4b-0e0f76522393",
-        "companyName": "Five Daughters Bakery",
+        "companyName": "Carino's Italian",
         "role": "Sr Eng",
         "status": "rejected",
         "note": "",
@@ -2516,7 +2572,7 @@ export const demoData: Application[] =
     },
     {
         "id": "0066f00c-676b-4a02-b4df-39599b7449a2",
-        "companyName": "Green Burrito / Red Burrito",
+        "companyName": "Swiss Chalet",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2537,7 +2593,7 @@ export const demoData: Application[] =
     },
     {
         "id": "72b7ed3f-3dc0-4cc9-8b78-30d0e293208e",
-        "companyName": "Robeks",
+        "companyName": "Zip's Drive-in",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2558,7 +2614,7 @@ export const demoData: Application[] =
     },
     {
         "id": "55f60536-ac2e-474c-9ab3-89a352e2b97f",
-        "companyName": "Duchess",
+        "companyName": "Honey Dew Donuts",
         "role": "Sr Eng",
         "status": "applicationRejected",
         "note": "",
@@ -2579,7 +2635,7 @@ export const demoData: Application[] =
     },
     {
         "id": "4fcb0816-add5-4617-a65b-7b22d1f3c6ca",
-        "companyName": "Sizzler",
+        "companyName": "Milo's Hamburgers",
         "role": "Eng Mgr",
         "status": "withdrew",
         "note": "",
@@ -2604,7 +2660,7 @@ export const demoData: Application[] =
     },
     {
         "id": "6defc9a2-fc92-45f5-90d1-2eba5ea6189e",
-        "companyName": "Earth Burger",
+        "companyName": "Greco Pizza",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2625,7 +2681,7 @@ export const demoData: Application[] =
     },
     {
         "id": "89ef4745-c6b4-4a2e-b8a1-844abb0e35fa",
-        "companyName": "Jimmy the Greek",
+        "companyName": "Tastee-Freeze",
         "role": "Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -2646,7 +2702,7 @@ export const demoData: Application[] =
     },
     {
         "id": "0272fa45-a04e-4a0b-b45b-1e54641ae5d8",
-        "companyName": "Domino's",
+        "companyName": "On the Border Mexican Grill & Cantina",
         "role": "Staff Eng",
         "status": "applicationIgnored",
         "note": "",
@@ -2667,7 +2723,7 @@ export const demoData: Application[] =
     },
     {
         "id": "ad256a9e-a9d1-4202-931c-fae82c72a651",
-        "companyName": "KFC/Kentucky Fried Chicken",
+        "companyName": "Marco's Pizza",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2688,7 +2744,7 @@ export const demoData: Application[] =
     },
     {
         "id": "e12f40ec-39bd-4177-bc26-99174d137da5",
-        "companyName": "A&W Restaurants",
+        "companyName": "Earth Burger",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -2725,7 +2781,7 @@ export const demoData: Application[] =
     },
     {
         "id": "3bad0079-8a18-4c96-9b65-b8ff44cc5c82",
-        "companyName": "Burger King",
+        "companyName": "Greco Pizza",
         "role": "Eng",
         "status": "applicationRejected",
         "note": "",
@@ -2746,7 +2802,7 @@ export const demoData: Application[] =
     },
     {
         "id": "1a8674a0-4c70-4965-bc42-de94715a5b1c",
-        "companyName": "Auntie Anne's",
+        "companyName": "Zippy's",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2767,7 +2823,7 @@ export const demoData: Application[] =
     },
     {
         "id": "284c1812-b26d-4dd0-99a2-82d749f82700",
-        "companyName": "Seattle's Best Coffee",
+        "companyName": "Noodles & Company",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2788,7 +2844,7 @@ export const demoData: Application[] =
     },
     {
         "id": "91b9fdd5-3591-41db-b886-c51d6957935d",
-        "companyName": "Sonic Drive-In",
+        "companyName": "Chipotle Mexican Grill",
         "role": "Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2809,7 +2865,7 @@ export const demoData: Application[] =
     },
     {
         "id": "7f3ea3ed-2136-407b-9bbe-b29ec393e246",
-        "companyName": "Yogen Früz",
+        "companyName": "Red Lobster",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -2830,7 +2886,7 @@ export const demoData: Application[] =
     },
     {
         "id": "c9215139-64c0-44ae-a5e6-c89ac09c03cd",
-        "companyName": "Potbelly Sandwich Works",
+        "companyName": "Sonic Drive-In",
         "role": "Sr Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -2855,7 +2911,7 @@ export const demoData: Application[] =
     },
     {
         "id": "e584b8fd-1707-488f-91a0-e50d2919b92a",
-        "companyName": "Marco's Pizza",
+        "companyName": "Carino's Italian",
         "role": "Sr Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2876,7 +2932,7 @@ export const demoData: Application[] =
     },
     {
         "id": "4aa801fc-abda-4f7f-b8a7-e3b5ca7b3014",
-        "companyName": "Chefette",
+        "companyName": "Wendy's",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2897,7 +2953,7 @@ export const demoData: Application[] =
     },
     {
         "id": "6da861b1-f614-4b8b-b4eb-cc372a7a6aaa",
-        "companyName": "Checkers and Rally's",
+        "companyName": "Runza",
         "role": "Sr Eng",
         "status": "withdrew",
         "note": "",
@@ -2922,7 +2978,7 @@ export const demoData: Application[] =
     },
     {
         "id": "7da4e04b-a320-487c-b7f9-fc4782815194",
-        "companyName": "Twin Peaks",
+        "companyName": "Slim Chickens",
         "role": "Sr Eng Mgr",
         "status": "applicationRejected",
         "note": "",
@@ -2943,7 +2999,7 @@ export const demoData: Application[] =
     },
     {
         "id": "b13c8756-63cd-4f64-a39c-51b6650b7d7e",
-        "companyName": "Carl's Jr.",
+        "companyName": "Waffle House",
         "role": "Eng Mgr",
         "status": "rejected",
         "note": "",
@@ -2972,7 +3028,7 @@ export const demoData: Application[] =
     },
     {
         "id": "91810276-723f-45ce-b50b-501f7dc8ca2d",
-        "companyName": "Jack's",
+        "companyName": "KFC",
         "role": "Eng Mgr",
         "status": "applicationIgnored",
         "note": "",
@@ -2993,13 +3049,13 @@ export const demoData: Application[] =
     },
     {
         "id": "f960cfe8-92e4-49ca-b065-f6f6eae86640",
-        "companyName": "Starbucks",
+        "companyName": "Hunt Brothers Pizza",
         "role": "Eng Mgr",
-        "status": "unresponsive",
+        "status": "rejected",
         "note": "",
         "source": "Recruiter contacted me",
         "firstContactDate": "2025-03-03",
-        "lastContactDate": "2025-03-10",
+        "lastContactDate": "2025-06-24",
         "reminderDate": "",
         "statusLog": [
             {
@@ -3013,6 +3069,10 @@ export const demoData: Application[] =
             {
                 "status": "unresponsive",
                 "timestamp": "2025-04-06T17:00:34.959Z"
+            },
+            {
+                "status": "rejected",
+                "timestamp": "2025-06-24T18:00:10.481Z"
             }
         ]
     }
