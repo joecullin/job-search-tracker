@@ -178,7 +178,7 @@ function Screen() {
                     <ul>
                         <li>Company names and notes have been sanitized.</li>
                         <li>Feel free to try everything, including edit, save, and delete.</li>
-                        <li>Your changes won't be permanently saved.</li>
+                        <li>This demo is a temporary sandbox that only you can see. Your changes won't be saved or shared.</li>
                     </ul>
                 </Alert>
             )}
