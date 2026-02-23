@@ -13,7 +13,16 @@ const HighlightsRow = ({ applications }: ComponentProps) => {
     const computeTotalDays = () => {
         applications.sort((a, b) => a.statusLog[0]?.timestamp?.localeCompare(b.statusLog[0]?.timestamp));
         const startDate = dayjs(applications[0]?.statusLog[0]?.timestamp);
-        const endDate = dayjs();
+        let endDate = dayjs();
+        // If it seems we're looking back at a finished search, adjust the end date.
+        if (applications.flatMap((a) => a.statusLog).some((entry) => entry.status === "acceptedOffer")) {
+            const acceptedTimestamps = applications
+                .flatMap((a) => a.statusLog)
+                .filter((entry) => entry.status === "acceptedOffer")
+                .map((entry) => entry.timestamp);
+            acceptedTimestamps.sort();
+            endDate = dayjs(acceptedTimestamps.pop());
+        }
         const totalDays = endDate.diff(startDate, "days");
         return totalDays;
     };
